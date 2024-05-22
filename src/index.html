@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Reaktion Test</title>
+    <link
+      rel="stylesheet"
+      href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <div
+        id="entry-screen"
+        class="click-field"
+        onclick="start()">
+        <p>Click when you're ready</p>
+      </div>
+      <div class="top edge"></div>
+      <div
+        class="click-field"
+        onclick="checkTime()">
+        <div class="time">
+          <span id="timer">0 </span>
+          <span class="measurement">ms</span>
+        </div>
+        <div class="actions">
+          <button
+            class="save"
+            onclick="save()">
+            Save score
+          </button>
+          <button
+            id="reset"
+            onclick="reset()">
+            Play again
+          </button>
+        </div>
+      </div>
+      <div class="bottom edge"></div>
+    </main>
+
+    <script src="./reaktionTest.js"></script>
+  </body>
+</html>
