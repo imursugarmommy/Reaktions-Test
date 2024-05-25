@@ -7,15 +7,84 @@
       content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="./style.css" />
+      href="./leaderboard.css" />
 
     <title>leaderboard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <body>
-    <button onclick="location.href = './index.html'">Go back</button>
+    <nav>
+      <div class="left flex">
+        <i class="fa-solid fa-user"></i>
+        <p class="username-display">Username</p>
+      </div>
+      <div class="right flex">
+        <div class="scores">
+          <div class="highscore score-wrap">
+            <p>Highscore</p>
+            <p class="highscore-display">Highscore</p>
+          </div>
+          <div class="score score-wrap">
+            <p>Score</p>
+            <p class="score-display">Score</p>
+          </div>
+        </div>
+        <button
+          id="play-again"
+          onclick="reset()">
+          Play again
+        </button>
+      </div>
+    </nav>
+    <main>
+      <h1>Leaderboard</h1>
+
+      <div class="input-wrapper">
+        <input
+          type="text"
+          id="search-input"
+          class="form-control"
+          placeholder="Search Player"
+          value="" />
+      </div>
+
+      <div class="row desc">
+        <div class="col left"></div>
+        <div class="col middle">Username</div>
+        <div class="col right">
+          <p>Highscore</p>
+          <i
+            id="sortHighscore"
+            class="fa-solid fa-caret-down sort-table-btn"
+            data-clicked="true"></i>
+        </div>
+        <div class="col right right-edge">
+          <p>Date</p>
+          <i
+            id="sortDate"
+            class="fa-solid fa-caret-up sort-table-btn"
+            data-clicked="false"></i>
+        </div>
+      </div>
+
+      <!-- ? make interactive/flexible and sortable with converting db data into array of objects -->
+      <!-- https://youtube.com/playlist?list=PL-51WBLyFTg1l3K0aTH0uX6PzgaLfzJBK&si=fU72df6nvSCHOy81 -- create table -->
+      <!-- https://youtu.be/AjSFVeUE-zo?si=yRYlgsO08rgwsvlm -- create list of objects -->
+
+      <div class="js-content mytable"></div>
+      <div class="row empty">
+        <div class="col left"></div>
+        <div class="col middle"></div>
+        <div class="col right"></div>
+        <div class="col right right-edge"></div>
+      </div>
+    </main>
     <script
       src="https://kit.fontawesome.com/8a6963ffc1.js"
       crossorigin="anonymous"></script>
-    <script src="./leaderboard.js"></script>
+    <script
+      src="./leaderboard.js"
+      type="module"></script>
+    <script src="./reaktionTest.js"></script>
   </body>
 </html>

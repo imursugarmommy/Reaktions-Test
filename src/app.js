@@ -12,6 +12,8 @@ const firebaseConfig = {
   storageBucket: "login-example-203c0.appspot.com",
   messagingSenderId: "537606564773",
   appId: "1:537606564773:web:d2a24123abf008eacf964c",
+  databaseURL:
+    "https://login-example-203c0-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 
 // Initialize Firebase

@@ -73,11 +73,20 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+import {
+  getDatabase,
+  set,
+  get,
+  ref,
+} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 import { app } from "./app.js";
 
 const auth = getAuth(app);
+const db = getDatabase();
 
 document.addEventListener("DOMContentLoaded", () => {
+  const score = JSON.parse(localStorage.getItem("score"));
+
   const signupBtn = document.querySelector("#signup-btn");
 
   signupBtn.addEventListener("click", (e) => {
@@ -96,10 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password, username, score)
       .then((userCredential) => {
         const user = userCredential.user;
-        window.location.href = "./leaderboard.html";
+
+        writeUserData(email, user.uid, username, score);
       })
       .catch((error) => {
         const errorMsg = document.querySelector(".error-message-signup");
@@ -107,11 +117,43 @@ document.addEventListener("DOMContentLoaded", () => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        const filteredErrMsg = errorCode.split("/");
-        const cleanErrMsg = filteredErrMsg[1].split("-");
+        console.log(error);
 
-        errorMsg.innerHTML = cleanErrMsg.join(" ");
+        if (errorCode === undefined) return;
+
+        if (errorCode.includes("/")) {
+          const filteredErrMsg = errorCode.split("/");
+          const cleanErrMsg = filteredErrMsg[1].split("-");
+
+          errorMsg.innerHTML = cleanErrMsg.join(" ");
+        } else {
+          errorMsg.innerHTML = errorCode;
+        }
+
         errorMsg.style.display = "block";
       });
   });
+
+  async function writeUserData(email, userID, username, score) {
+    const reference = ref(db, "users/" + userID);
+
+    await set(reference, {
+      username,
+      email,
+      score: score || 0,
+      highscore: score,
+    });
+
+    sessionStorage.setItem(
+      "user-info",
+      JSON.stringify({
+        username: username,
+        email: email,
+        score: score,
+        highscore: score,
+      })
+    );
+
+    location.href = "./leaderboard.html";
+  }
 });

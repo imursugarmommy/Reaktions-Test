@@ -2,6 +2,8 @@ const entryScreen = document.getElementById("entry-screen");
 const actionButtons = document.querySelectorAll(".actions button");
 const measurement = document.querySelector(".measurement");
 
+var startTime, interval, elapsedTime;
+
 function start() {
   entryScreen.innerHTML = "<p>get ready . . .</p>";
   entryScreen.style.background = "rgb(56, 173, 56)";
@@ -21,8 +23,6 @@ function start() {
 }
 
 const timer = document.getElementById("timer");
-
-var startTime, interval, elapsedTime;
 
 function startTimer() {
   startTime = Date.now();
@@ -50,6 +50,8 @@ function checkTime() {
 }
 
 function reset() {
+  location.href = "./index.html";
+
   interval = undefined;
   startTime = 0;
   elapsedTime = 0;
@@ -68,5 +70,7 @@ function reset() {
 }
 
 function save() {
+  localStorage.setItem("score", elapsedTime);
+
   location.href = "./register.html";
 }
