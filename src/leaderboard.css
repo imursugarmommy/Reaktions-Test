@@ -191,6 +191,11 @@ main {
     .col {
       border-bottom: none;
     }
+
+    .fa-caret-right,
+    .fa-caret-left {
+      cursor: pointer;
+    }
   }
 }
 
@@ -239,4 +244,17 @@ main {
 
 .sort-table-btn {
   cursor: pointer;
+}
+
+@keyframes light-up {
+  10% {
+    color: rgb(255, 0, 0);
+  }
+  100% {
+    color: black;
+  }
+}
+
+.highlight-row {
+  color: black;
 }

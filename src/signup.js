@@ -98,6 +98,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const passwordConfirm = document.querySelector(
       "#confirm-signup-password"
     ).value;
+
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+
+    const currDate = `${year}-${month}-${day}`;
+
     const errorMsg = document.querySelector(".error-message-signup");
 
     if (password !== passwordConfirm) {
@@ -108,8 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
     createUserWithEmailAndPassword(auth, email, password, username, score)
       .then((userCredential) => {
         const user = userCredential.user;
+        const JSONscore = JSON.parse(localStorage.getItem("score"));
 
-        writeUserData(email, user.uid, username, score);
+        writeUserData(email, user.uid, username, JSONscore, currDate);
       })
       .catch((error) => {
         const errorMsg = document.querySelector(".error-message-signup");
@@ -134,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  async function writeUserData(email, userID, username, score) {
+  async function writeUserData(email, userID, username, score, currDate) {
     const reference = ref(db, "users/" + userID);
 
     await set(reference, {
@@ -142,18 +151,23 @@ document.addEventListener("DOMContentLoaded", () => {
       email,
       score: score || 0,
       highscore: score,
+      date: currDate,
     });
 
-    sessionStorage.setItem(
-      "user-info",
-      JSON.stringify({
-        username: username,
-        email: email,
-        score: score,
-        highscore: score,
-      })
-    );
-
-    location.href = "./leaderboard.html";
+    new Promise((resolve) => {
+      sessionStorage.setItem(
+        "user-info",
+        JSON.stringify({
+          username: username,
+          email: email,
+          score: score,
+          highscore: score,
+          date: currDate,
+        })
+      );
+      resolve();
+    }).then(() => {
+      location.href = "./leaderboard.html";
+    });
   }
 });

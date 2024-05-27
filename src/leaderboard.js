@@ -21,126 +21,200 @@ document.querySelector(".score-display").innerHTML = userObj.score + " ms";
 document.querySelector(".highscore-display").innerHTML =
   userObj.highscore + " ms";
 
-get(child(ref(db), "users/")).then((snapshot) => {
+async function updateAllUsers() {
+  const snapshot = await get(child(ref(db), "users/"));
   sessionStorage.setItem("all-users", JSON.stringify(snapshot.val()));
-});
+}
 
-const allUserObj = JSON.parse(sessionStorage.getItem("all-users"));
-const allUserArray = Object.values(allUserObj);
+updateAllUsers().then(() => {
+  const allUserObj = JSON.parse(sessionStorage.getItem("all-users"));
+  const allUserArray = Object.values(allUserObj);
 
-let sortedByNum;
+  let pages = Math.floor(allUserArray.length / 5 + 1);
+  let currPage = 1;
+  let currIndex = (currPage - 1) * 5;
 
-filterByScore();
+  const prevPageBtn = document.getElementById("prev-page");
+  const nextPageBtn = document.getElementById("next-page");
+  const currPageHTML = document.getElementById("curr-page");
+  const maxPageHTML = document.getElementById("max-page");
 
-const searchInp = document.getElementById("search-input");
+  const toUserBtn = document.getElementById("to-user");
 
-searchInp.addEventListener("keyup", () => {
-  var inputVal = searchInp.value;
+  // * gets you to your own score
+  toUserBtn.addEventListener("click", () => {
+    var indexUser = sortedByNum
+      .map(function (e) {
+        return e.username;
+      })
+      .indexOf(userObj.username);
 
-  var data = searchTable(inputVal, sortedByNum);
+    var placeUser = indexUser + 1;
 
-  buildTable(data);
-});
+    currPage = Math.floor((placeUser + 5) / 5);
+    currIndex = (currPage - 1) * 5;
+    currPageHTML.innerHTML = currPage;
 
-function searchTable(value, data) {
-  var table = document.querySelector(".mytable");
-  table.style.display = "flex";
+    buildTable(sortedByNum);
 
-  var filteredData = [];
+    const userRow = document.getElementById("highlight-row");
 
-  for (let i = 0; i < data.length; i++) {
-    value = value.toLowerCase();
-    var username = data[i].username.toLowerCase();
+    userRow.style.animation = "light-up 3s ease .5s";
+  });
 
-    if (username.includes(value)) {
-      filteredData.push(data[i]);
+  maxPageHTML.innerHTML = pages;
+  currPageHTML.innerHTML = currPage;
+
+  prevPageBtn.addEventListener("click", () => {
+    currPage--;
+    if (currPage < 1) currPage = 1;
+    currIndex = (currPage - 1) * 5;
+    currPageHTML.innerHTML = currPage;
+
+    if (searchInp.value !== "") {
+      var data = searchTable(searchInp.value, sortedByNum);
+
+      buildTable(data);
+      return;
+    }
+
+    buildTable(sortedByNum);
+  });
+
+  nextPageBtn.addEventListener("click", () => {
+    currPage++;
+    if (currPage > pages) currPage = pages;
+    currIndex = (currPage - 1) * 5;
+    currPageHTML.innerHTML = currPage;
+
+    if (searchInp.value !== "") {
+      var data = searchTable(searchInp.value, sortedByNum);
+
+      buildTable(data);
+      return;
+    }
+
+    buildTable(sortedByNum);
+  });
+
+  let sortedByNum;
+  let sortedByDate;
+  let originalIndices;
+
+  filterByScore();
+
+  const searchInp = document.getElementById("search-input");
+
+  searchInp.addEventListener("keyup", () => {
+    var inputVal = searchInp.value;
+
+    var data = searchTable(inputVal, sortedByNum);
+
+    pages = Math.floor(data.length / 5 + 1);
+    currPage = 1;
+    currIndex = (currPage - 1) * 5;
+
+    maxPageHTML.innerHTML = pages;
+    currPageHTML.innerHTML = currPage;
+
+    buildTable(data);
+  });
+
+  function searchTable(value, data) {
+    var table = document.querySelector(".mytable");
+    table.style.display = "flex";
+
+    var filteredData = [];
+
+    for (let i = 0; i < data.length; i++) {
+      value = value.toLowerCase();
+      var username = data[i].username.toLowerCase();
+
+      if (username.includes(value)) {
+        filteredData.push(data[i]);
+      }
+    }
+
+    if (filteredData.length === 0) {
+      table.style.display = "none";
+    }
+
+    return filteredData;
+  }
+
+  function buildTable(data) {
+    var table = document.querySelector(".mytable");
+    table.innerHTML = "";
+
+    let listLength =
+      data.length - currPage * 5 < 0 ? data.length - (currPage - 1) * 5 : 5;
+
+    for (let i = currIndex; i < currIndex + listLength; i++) {
+      const user = data[i];
+      const rowClass =
+        user.username === userObj.username ? "highlight-row" : "";
+
+      var row = `
+        <div class="row ${rowClass}" id="${rowClass}">
+          <div class="col left">${originalIndices[data[i].username]}</div>
+          <div class="col middle">${data[i].username}</div>
+          <div class="col right js-col-right">${data[i].highscore}</div>
+          <div class="col right-edge js-col-right-edge">${data[i].date}</div>
+        </div>
+        `;
+      table.innerHTML += row;
+    }
+
+    // * fills gaps to the bottom of the list so it doesnt look empty :)
+    if (listLength < 5) {
+      for (let i = 0; i < 5 - listLength; i++) {
+        var emptyRow = `
+        <div class="row">
+          <div class="col left">${allUserArray.length + i + 1}</div>
+          <div class="col middle"></div>
+          <div class="col right js-col-right"></div>
+          <div class="col right-edge js-col-right-edge"></div>
+        </div>
+      `;
+        table.innerHTML += emptyRow;
+      }
     }
   }
 
-  if (filteredData.length === 0) {
-    table.style.display = "none";
+  function filterByDate() {
+    sortedByDate = [...allUserArray].sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    buildTable(sortedByDate);
   }
 
-  return filteredData;
-}
+  function filterByScore() {
+    sortedByNum = [...allUserArray].sort((a, b) => a.highscore - b.highscore);
 
-function buildTable(data) {
-  var table = document.querySelector(".mytable");
-  table.innerHTML = "";
+    // ? idek what is going on here, its from chatGPT and it works so i wont touch it
+    // * part of code, where it keeps the index each player gets from
+    // * their score rating, when sorted by date
+    originalIndices = sortedByNum.reduce((acc, user, index) => {
+      acc[user.username] = index + 1;
+      return acc;
+    }, {});
 
-  for (let i = 0; i < data.length; i++) {
-    var row = `
-    <div class="row">
-      <div class="col left">${i + 1}</div>
-      <div class="col middle">${data[i].username}</div>
-      <div class="col right">${data[i].highscore}</div>
-      <div class="col right-edge">${data[i].date}</div>
-    </div>
-    `;
-    table.innerHTML += row;
+    buildTable(sortedByNum);
   }
-}
 
-function filterByDate() {
-  const sortedByDate = allUserArray.sort(function (a, b) {
-    return new Date(b.date) - new Date(a.date);
+  const sortDateBtn = document.querySelector("#sortDate");
+
+  sortDateBtn.addEventListener("click", () => {
+    let clicked = sortDateBtn.getAttribute("data-clicked");
+
+    if (clicked === "true") {
+      sortDateBtn.setAttribute("data-clicked", "false");
+      sortDateBtn.style.rotate = "0deg";
+      filterByScore();
+    } else {
+      sortDateBtn.setAttribute("data-clicked", "true");
+      sortDateBtn.style.rotate = "180deg";
+      filterByDate();
+    }
   });
-
-  buildTable(sortedByDate);
-}
-
-function filterByScore() {
-  sortedByNum = allUserArray.sort(function (a, b) {
-    return a.score - b.score;
-  });
-
-  buildTable(sortedByNum);
-}
-
-// manages sorting Funtion on click of the filter Arrow
-const sortHighscoreBtn = document.querySelector("#sortHighscore");
-const sortDateBtn = document.querySelector("#sortDate");
-
-sortHighscoreBtn.addEventListener("click", filterByScore);
-sortDateBtn.addEventListener("click", filterByDate);
-
-sortHighscoreBtn.addEventListener("click", () => {
-  let clicked = sortHighscoreBtn.getAttribute("data-clicked");
-
-  if (clicked === "true") {
-    sortHighscoreBtn.setAttribute("data-clicked", "false");
-    sortHighscoreBtn.style.rotate = "180deg";
-
-    sortDateBtn.setAttribute("data-clicked", "true");
-    sortDateBtn.style.rotate = "180deg";
-
-    filterByDate();
-  } else if (clicked === "false") {
-    sortHighscoreBtn.setAttribute("data-clicked", "true");
-    sortHighscoreBtn.style.rotate = "0deg";
-
-    sortDateBtn.setAttribute("data-clicked", "false");
-    sortDateBtn.style.rotate = "0deg";
-  }
-});
-
-sortDateBtn.addEventListener("click", () => {
-  let clicked = sortDateBtn.getAttribute("data-clicked");
-
-  if (clicked === "true") {
-    sortHighscoreBtn.setAttribute("data-clicked", "true");
-    sortHighscoreBtn.style.rotate = "0deg";
-
-    sortDateBtn.setAttribute("data-clicked", "false");
-    sortDateBtn.style.rotate = "0deg";
-
-    filterByScore();
-  } else if (clicked === "false") {
-    sortHighscoreBtn.setAttribute("data-clicked", "false");
-    sortHighscoreBtn.style.rotate = "180deg";
-
-    sortDateBtn.setAttribute("data-clicked", "true");
-    sortDateBtn.style.rotate = "180deg";
-    filterByDate();
-  }
 });

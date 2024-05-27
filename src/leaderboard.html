@@ -22,11 +22,11 @@
         <div class="scores">
           <div class="highscore score-wrap">
             <p>Highscore</p>
-            <p class="highscore-display">Highscore</p>
+            <p class="highscore-display">ms</p>
           </div>
           <div class="score score-wrap">
             <p>Score</p>
-            <p class="score-display">Score</p>
+            <p class="score-display">ms</p>
           </div>
         </div>
         <button
@@ -53,10 +53,6 @@
         <div class="col middle">Username</div>
         <div class="col right">
           <p>Highscore</p>
-          <i
-            id="sortHighscore"
-            class="fa-solid fa-caret-down sort-table-btn"
-            data-clicked="true"></i>
         </div>
         <div class="col right right-edge">
           <p>Date</p>
@@ -76,7 +72,18 @@
         <div class="col left"></div>
         <div class="col middle"></div>
         <div class="col right"></div>
-        <div class="col right right-edge"></div>
+        <div class="col right right-edge">
+          <i
+            class="fa-solid fa-caret-left"
+            id="prev-page"></i>
+          <i
+            class="fa-solid fa-caret-right"
+            id="next-page"></i>
+          <p id="curr-page">0</p>
+          <p>...</p>
+          <p id="max-page">0</p>
+          <button id="to-user">To you</button>
+        </div>
       </div>
     </main>
     <script
