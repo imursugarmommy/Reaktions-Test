@@ -4,6 +4,9 @@
 import {
   getDatabase,
   get,
+  set,
+  remove,
+  update,
   ref,
   child,
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
@@ -15,15 +18,163 @@ const auth = getAuth(app);
 const db = getDatabase();
 
 const userObj = JSON.parse(sessionStorage.getItem("user-info"));
+const userCreds = JSON.parse(sessionStorage.getItem("user-creds"));
 
-document.querySelector(".username-display").innerHTML = userObj.username;
-document.querySelector(".score-display").innerHTML = userObj.score + " ms";
-document.querySelector(".highscore-display").innerHTML =
-  userObj.highscore + " ms";
+const popup = document.querySelector(".popup");
+const popupOpener = document.querySelector("#popup-opener");
+
+popupOpener.addEventListener("click", managePopup);
+
+function managePopup() {
+  if (userObj === null) return;
+
+  const clicked = popup.getAttribute("data-clicked");
+
+  if (clicked === "true") {
+    popup.style.display = "none";
+    popup.setAttribute("data-clicked", "false");
+  } else if (clicked === "false") {
+    popup.style.display = "flex";
+    popup.setAttribute("data-clicked", "true");
+  }
+}
+
+const deleteBtn = document.querySelector("#delete");
+const confirmPopup = document.querySelector(".confirm-popup");
+
+deleteBtn.addEventListener("click", (e) => {
+  if (e.target === confirmBtn || e.target === cancelBtn) return;
+
+  confirmPopup.style.display = "flex";
+});
+
+const confirmBtn = document.querySelector("#yes");
+const cancelBtn = document.querySelector("#no");
+
+confirmBtn.addEventListener("click", deleteAcc);
+cancelBtn.addEventListener("click", () => {
+  confirmPopup.style.display = "none";
+});
+
+async function deleteAcc() {
+  const reference = await child(ref(db), "users/" + userCreds.uid);
+  const snapshot = await get(reference);
+
+  await remove(reference);
+
+  const referenceScore = await child(ref(db), "scores/" + userCreds.uid);
+  const snapshotScore = await get(reference);
+
+  await remove(referenceScore);
+
+  logout();
+}
+
+window.addEventListener("click", (e) => {
+  if (
+    popup.contains(e.target) ||
+    deleteBtn.contains(e.target) ||
+    e.target === popupOpener
+  )
+    return;
+
+  managePopup();
+});
+
+const manageUserBtn = document.getElementById("logout-btn");
+
+if (userObj !== null) {
+  document.querySelector(".username-display").innerHTML = userObj.username;
+  document.querySelector(".score-display").innerHTML = userObj.score + " ms";
+  document.querySelector(".highscore-display").innerHTML =
+    userObj.highscore + " ms";
+  manageUserBtn.addEventListener("click", logout);
+} else {
+  document.querySelector(".username-display").innerHTML =
+    "Play a game to login";
+  document.querySelector(".scores").style.display = "none";
+  document.querySelector("#play-again").innerHTML = "Play Game";
+
+  document.querySelector(".popup").style.display = "none";
+}
+
+function logout() {
+  sessionStorage.removeItem("user-info");
+  sessionStorage.removeItem("user-creds");
+  sessionStorage.removeItem("userScoresToday");
+  sessionStorage.removeItem("userScoresAllTime");
+
+  location.href = "./index.html";
+}
+
+// * fixes the reentries of score when reloaded
+window.addEventListener("beforeunload", () => {
+  localStorage.removeItem("score");
+});
+
+async function writeUserData(username, email, score, highscore, date, userID) {
+  const reference = ref(db, "users/" + userID);
+
+  await set(reference, {
+    username,
+    email,
+    score,
+    highscore,
+    date,
+  });
+}
+
+async function writeNewScore(userID, score, username) {
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  const currDate = `${year}-${month}-${day}`;
+
+  // * user Refernce per userID
+  const referenceUser = ref(db, "scores/" + userID);
+  const userSnapshot = await get(referenceUser);
+
+  // * alle user Scores verpackt in object mit deren datum
+
+  // * alle user Scores von dem heutigen Tag
+  const referenceUserScoresToday = ref(
+    db,
+    "scores/" + userID + "/" + currDate + "/"
+  );
+  const dailySnapshot = await get(referenceUserScoresToday);
+
+  const userScoreTodayObj = dailySnapshot.val();
+  const userScoreTodayArray =
+    userScoreTodayObj === null ? [] : Object.values(userScoreTodayObj);
+  const scoreAmountToday = userScoreTodayArray.length;
+
+  await update(referenceUserScoresToday, {
+    [scoreAmountToday + 1]: score,
+  });
+}
 
 async function updateAllUsers() {
   const snapshot = await get(child(ref(db), "users/"));
   sessionStorage.setItem("all-users", JSON.stringify(snapshot.val()));
+
+  if (!userObj) return;
+
+  writeUserData(
+    userObj.username,
+    userObj.email,
+    userObj.score,
+    userObj.highscore,
+    userObj.date,
+    userCreds.uid
+  );
+
+  const score = JSON.parse(localStorage.getItem("score"));
+
+  if (score === null) return;
+
+  writeNewScore(userCreds.uid, userObj.score, userObj.username);
 }
 
 updateAllUsers().then(() => {
@@ -40,6 +191,11 @@ updateAllUsers().then(() => {
   const maxPageHTML = document.getElementById("max-page");
 
   const toUserBtn = document.getElementById("to-user");
+
+  // ! check if redisplay after login
+  if (userObj === null) {
+    toUserBtn.style.display = "none";
+  }
 
   // * gets you to your own score
   toUserBtn.addEventListener("click", () => {
@@ -76,6 +232,9 @@ updateAllUsers().then(() => {
 
       buildTable(data);
       return;
+    } else if (sortDateBtn.getAttribute("data-clicked") === "true") {
+      buildTable(sortedByDate);
+      return;
     }
 
     buildTable(sortedByNum);
@@ -91,6 +250,9 @@ updateAllUsers().then(() => {
       var data = searchTable(searchInp.value, sortedByNum);
 
       buildTable(data);
+      return;
+    } else if (sortDateBtn.getAttribute("data-clicked") === "true") {
+      buildTable(sortedByDate);
       return;
     }
 
@@ -151,8 +313,11 @@ updateAllUsers().then(() => {
 
     for (let i = currIndex; i < currIndex + listLength; i++) {
       const user = data[i];
-      const rowClass =
-        user.username === userObj.username ? "highlight-row" : "";
+      let rowClass = "";
+
+      if (userObj !== null) {
+        rowClass = user.username === userObj.username ? "highlight-row" : "";
+      }
 
       var row = `
         <div class="row ${rowClass}" id="${rowClass}">
@@ -185,6 +350,7 @@ updateAllUsers().then(() => {
     sortedByDate = [...allUserArray].sort(
       (a, b) => new Date(b.date) - new Date(a.date)
     );
+
     buildTable(sortedByDate);
   }
 

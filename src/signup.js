@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const date = new Date();
     const day = date.getDate();
-    const month = date.getMonth();
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
     const currDate = `${year}-${month}-${day}`;
@@ -118,7 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const user = userCredential.user;
         const JSONscore = JSON.parse(localStorage.getItem("score"));
 
-        writeUserData(email, user.uid, username, JSONscore, currDate);
+        sessionStorage.setItem("user-creds", JSON.stringify(user));
+
+        writeUserData(email, user.uid, username, JSONscore, currDate, user);
       })
       .catch((error) => {
         const errorMsg = document.querySelector(".error-message-signup");
@@ -143,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  async function writeUserData(email, userID, username, score, currDate) {
+  async function writeUserData(email, userID, username, score, currDate, user) {
     const reference = ref(db, "users/" + userID);
 
     await set(reference, {

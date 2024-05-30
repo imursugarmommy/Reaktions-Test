@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const date = new Date();
     const day = date.getDate();
-    const month = date.getMonth();
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
     const currDate = `${year}-${month}-${day}`;
@@ -51,24 +51,15 @@ document.addEventListener("DOMContentLoaded", () => {
                   Number(snapshot.val().highscore)
                 ),
                 date:
-                  JSONscore > Number(snapshot.val().highscore)
+                  JSONscore < Number(snapshot.val().highscore)
                     ? currDate
                     : snapshot.val().date,
               })
             );
+
             sessionStorage.setItem("user-creds", JSON.stringify(user));
 
-            const score = JSON.parse(localStorage.getItem("score"));
-
-            writeUserData(
-              snapshot.val().username,
-              snapshot.val().email,
-              Number(snapshot.val().highscore),
-              score,
-              reference,
-              snapshot.val().date,
-              currDate
-            );
+            window.location.href = "./leaderboard.html";
           }
         });
       })
@@ -93,23 +84,3 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 });
-
-async function writeUserData(
-  username,
-  email,
-  highscore,
-  score,
-  reference,
-  savedDate,
-  currDate
-) {
-  await set(reference, {
-    username,
-    email,
-    score,
-    highscore: Math.min(highscore, score),
-    date: Number(score) > Number(highscore) ? currDate : savedDate,
-  });
-
-  window.location.href = "./leaderboard.html";
-}

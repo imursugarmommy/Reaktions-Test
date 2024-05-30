@@ -98,6 +98,10 @@ body {
   background-size: cover;
 }
 
+.close-btn {
+  cursor: pointer;
+}
+
 .container {
   width: 400px;
   max-width: 400px;
@@ -106,6 +110,7 @@ body {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius);
   background: #ffffff;
+  z-index: -10;
 }
 
 .container,
@@ -124,6 +129,12 @@ body {
 
 .form > *:last-child {
   margin-bottom: 0;
+}
+
+.top-row {
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }
 
 .form__title {
@@ -238,6 +249,7 @@ body {
   gap: 2rem;
   font-size: 50px;
   color: white;
+  cursor: pointer;
 
   .time {
     pointer-events: none;
@@ -303,11 +315,45 @@ body {
   display: block;
   text-align: center;
   background-color: rgb(255, 139, 43);
-
+  cursor: pointer;
   z-index: 10;
 
   & p {
     pointer-events: none;
+  }
+}
+
+.top.edge {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  font-size: 20px;
+
+  & a {
+    display: flex;
+    color: rgb(102, 102, 102);
+    align-items: center;
+    height: fit-content;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: 200ms ease;
+  }
+
+  & a:hover {
+    color: black;
+  }
+
+  .logged-in-info {
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    gap: 1.5rem;
+    font-size: 30px;
   }
 }
 
