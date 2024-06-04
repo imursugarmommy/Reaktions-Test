@@ -89,6 +89,16 @@ body {
   --color-success: #4bb544;
   --border-radius: 4px;
 
+  --blue-primary: rgb(35, 123, 255);
+  --blue-hover: rgb(61, 138, 255);
+
+  --blue-dark: rgb(0, 92, 230);
+  --blue-dark-hover: rgb(0, 102, 255);
+
+  --blue-pitch: rgb(0, 50, 126);
+
+  --white: rgb(255, 255, 255);
+
   margin: 0;
   height: 100vh;
   display: flex;
@@ -157,23 +167,36 @@ body {
 
 .form__input-group {
   margin-bottom: 1rem;
+  position: relative;
 }
 
 .form__input {
-  display: block;
   width: 100%;
-  padding: 0.75rem;
-  box-sizing: border-box;
-  border-radius: var(--border-radius);
-  border: 1px solid #dddddd;
+  display: flex;
+  justify-content: center;
+  margin-block: 1.5rem;
+
+  padding: 0.5rem 1rem;
   outline: none;
-  background: #eeeeee;
-  transition: background 0.2s, border-color 0.2s;
+  border: none;
+  border-bottom: 1px solid var(--blue-pitch);
+  background-color: transparent;
+  outline: none;
+  color: var(--blue-pitch);
 }
 
-.form__input:focus {
-  border-color: var(--color-primary);
-  background: #ffffff;
+.form__input::placeholder {
+  color: var(--blue-pitch);
+  opacity: 0.4;
+}
+
+.neccessary {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 20px;
+  color: var(--color-error);
+  font-weight: 800;
 }
 
 .form__input--error {
@@ -197,11 +220,12 @@ body {
   border-radius: var(--border-radius);
   outline: none;
   cursor: pointer;
-  background: var(--color-primary);
+  background: var(--blue-pitch);
+  transition: 200ms ease;
 }
 
 .form__button:hover {
-  background: var(--color-primary-dark);
+  background: var(--blue-dark-hover);
 }
 
 .form__button:active {
@@ -262,6 +286,7 @@ body {
 
 .edge {
   z-index: 40;
+  background-color: white;
 }
 
 .actions {
@@ -323,6 +348,34 @@ body {
   }
 }
 
+#wait-screen {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: block;
+  text-align: center;
+  background-color: rgb(56, 173, 56);
+  cursor: pointer;
+  z-index: 0;
+
+  & p {
+    pointer-events: none;
+  }
+}
+
+.bottom.edge {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  font-size: 20px;
+  background-color: white;
+}
+
 .top.edge {
   width: 100%;
   position: absolute;
@@ -332,6 +385,7 @@ body {
   justify-content: space-between;
   padding: 1rem 2rem;
   font-size: 20px;
+  background-color: white;
 
   & a {
     display: flex;

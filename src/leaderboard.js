@@ -67,6 +67,17 @@ async function deleteAcc() {
 
   await remove(referenceScore);
 
+  let user = auth.currentUser;
+
+  await user
+    .delete()
+    .then(() => {
+      console.log("user deleted");
+    })
+    .catch((error) => {
+      console.log("not working");
+    });
+
   logout();
 }
 
@@ -74,14 +85,87 @@ window.addEventListener("click", (e) => {
   if (
     popup.contains(e.target) ||
     deleteBtn.contains(e.target) ||
-    e.target === popupOpener
-  )
+    e.target === popupOpener ||
+    profilePopup.style.display === "flex"
+  ) {
     return;
+  }
+
+  if (popup.style.display === "none" || popup.style.display === "") return;
 
   managePopup();
 });
 
 const manageUserBtn = document.getElementById("logout-btn");
+const manageProfileBtn = document.getElementById("profile-btn");
+
+const profilePopup = document.querySelector(".profile-popup");
+
+const changeUsername = document.getElementById("change-username");
+const changeAge = document.getElementById("change-age");
+const changeIdentifier = document.getElementById("change-identifier");
+
+const saveChangesBtn = document.getElementById("done");
+
+const deleteUsernameInput = document.getElementById("remove-username");
+const deleteAgeInput = document.getElementById("remove-age");
+const deleteIdentifierInput = document.getElementById("remove-identifier");
+
+const cancelChanges = document.getElementById("cancel-popup");
+
+deleteUsernameInput.addEventListener(
+  "click",
+  () => (changeUsername.value = "")
+);
+deleteAgeInput.addEventListener("click", () => (changeAge.value = ""));
+deleteIdentifierInput.addEventListener(
+  "click",
+  () => (changeIdentifier.value = "")
+);
+
+profilePopup.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
+
+manageProfileBtn.addEventListener(
+  "click",
+  () => (profilePopup.style.display = "flex")
+);
+
+cancelChanges.addEventListener("click", () => {
+  changeUsername.value = userObj.username;
+  changeAge.value = userObj.age ? userObj.age : "";
+  changeIdentifier.value = userObj.projectIdentifier
+    ? userObj.projectIdentifier
+    : "";
+
+  profilePopup.style.display = "none";
+});
+
+saveChangesBtn.addEventListener("click", async () => {
+  const reference = await ref(db, "users/" + userCreds.uid);
+
+  Object.assign(userObj, {
+    age: changeAge.value,
+    projectIdentifier:
+      changeIdentifier.value === "13125" ? changeIdentifier.value : "",
+  });
+
+  sessionStorage.setItem("user-info", JSON.stringify(userObj));
+
+  update(reference, {
+    username: changeUsername.value,
+    age: changeAge.value,
+    projectIdentifier:
+      changeIdentifier.value === "13125" ? changeIdentifier.value : "",
+  });
+
+  if (changeIdentifier.value !== "13125") {
+    changeIdentifier.value = "";
+  }
+
+  profilePopup.style.display = "none";
+});
 
 if (userObj !== null) {
   document.querySelector(".username-display").innerHTML = userObj.username;
@@ -89,6 +173,12 @@ if (userObj !== null) {
   document.querySelector(".highscore-display").innerHTML =
     userObj.highscore + " ms";
   manageUserBtn.addEventListener("click", logout);
+
+  changeUsername.value = userObj.username;
+  changeAge.value = userObj.age ? userObj.age : "";
+  changeIdentifier.value = userObj.projectIdentifier
+    ? userObj.projectIdentifier
+    : "";
 } else {
   document.querySelector(".username-display").innerHTML =
     "Play a game to login";
@@ -112,8 +202,19 @@ window.addEventListener("beforeunload", () => {
   localStorage.removeItem("score");
 });
 
-async function writeUserData(username, email, score, highscore, date, userID) {
+async function writeUserData(
+  username,
+  email,
+  score,
+  highscore,
+  date,
+  userID,
+  age,
+  projectIdentifier
+) {
   const reference = ref(db, "users/" + userID);
+  const confirmedAge = age ? age : "";
+  const confirmedIdentifier = projectIdentifier ? projectIdentifier : "";
 
   await set(reference, {
     username,
@@ -121,6 +222,8 @@ async function writeUserData(username, email, score, highscore, date, userID) {
     score,
     highscore,
     date,
+    age: confirmedAge,
+    projectIdentifier: confirmedIdentifier,
   });
 }
 
@@ -167,7 +270,9 @@ async function updateAllUsers() {
     userObj.score,
     userObj.highscore,
     userObj.date,
-    userCreds.uid
+    userCreds.uid,
+    userObj.age,
+    userObj.projectIdentifier
   );
 
   const score = JSON.parse(localStorage.getItem("score"));

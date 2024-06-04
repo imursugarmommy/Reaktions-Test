@@ -21,7 +21,10 @@
       </div>
       <div class="nav">
         <div class="left">
-          <h1 class="username-display">Username</h1>
+          <div class="flex user-stats">
+            <h1 class="username-display">Username</h1>
+            <p class="age-display">54</p>
+          </div>
           <p class="back-to-user"></p>
         </div>
         <div class="right">
@@ -57,8 +60,14 @@
       </div>
 
       <div class="graph-stats">
-        <canvas id="myChart"></canvas>
-        <canvas id="myChartDay"></canvas>
+        <div class="graph">
+          <h2>Week</h2>
+          <canvas id="myChart"></canvas>
+        </div>
+        <div class="graph">
+          <h2>Days</h2>
+          <canvas id="myChartDay"></canvas>
+        </div>
       </div>
     </main>
     <script

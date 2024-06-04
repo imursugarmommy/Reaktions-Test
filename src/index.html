@@ -18,6 +18,12 @@
         onclick="start()">
         <p>Click when you're ready</p>
       </div>
+      <div
+        id="wait-screen"
+        class="click-field"
+        onclick="earlyStop()">
+        <p>get ready . . .</p>
+      </div>
       <div class="top edge">
         <div class="logged-in-info">
           <i class="fa-solid fa-user"></i>
@@ -29,8 +35,8 @@
         </a>
       </div>
       <div
-        class="click-field"
         id="stop-screen"
+        class="click-field"
         onclick="checkTime()">
         <div class="time">
           <span id="timer">0 </span>
@@ -68,7 +74,7 @@
             id="login-email"
             class="form__input"
             autofocus
-            placeholder="Username or email" />
+            placeholder="Email" />
           <div class="form__input-error-message"></div>
         </div>
         <div class="form__input-group">
@@ -89,21 +95,11 @@
         </button>
         <p class="form__text">
           <a
-            href="#"
-            class="form__link"
-            >Forgot your password?</a
-          >
-        </p>
-        <p class="form__text">
-          <a
             class="form__link"
             href="./"
             id="linkCreateAccount"
             >Don't have an account? Create account</a
           >
-        </p>
-        <p class="form__text">
-          <a class="form__link skip">Skip login</a>
         </p>
       </form>
       <form
@@ -124,6 +120,7 @@
             autofocus
             placeholder="Username" />
           <div class="form__input-error-message"></div>
+          <p class="neccessary">*</p>
         </div>
         <div class="form__input-group">
           <input
@@ -133,6 +130,7 @@
             autofocus
             placeholder="Email Address" />
           <div class="form__input-error-message"></div>
+          <p class="neccessary">*</p>
         </div>
         <div class="form__input-group">
           <input
@@ -142,6 +140,7 @@
             autofocus
             placeholder="Password" />
           <div class="form__input-error-message"></div>
+          <p class="neccessary">*</p>
         </div>
         <div class="form__input-group">
           <input
@@ -150,6 +149,25 @@
             class="form__input"
             autofocus
             placeholder="Confirm password" />
+          <div class="form__input-error-message"></div>
+          <p class="neccessary">*</p>
+        </div>
+        <div class="form__input-group">
+          <input
+            type="text"
+            id="age"
+            class="form__input"
+            autofocus
+            placeholder="Age (optional)" />
+          <div class="form__input-error-message"></div>
+        </div>
+        <div class="form__input-group">
+          <input
+            type="text"
+            id="project-identifier"
+            class="form__input"
+            autofocus
+            placeholder="Project identifier (optional)" />
           <div class="form__input-error-message"></div>
         </div>
         <p class="error-message error-message-signup"></p>
@@ -165,13 +183,6 @@
             href="./"
             id="linkLogin"
             >Already have an account? Sign in</a
-          >
-        </p>
-        <p class="form__text">
-          <a
-            class="form__link skip"
-            onclick="window.location.href = 'index.html'"
-            >Skip signup</a
           >
         </p>
       </form>

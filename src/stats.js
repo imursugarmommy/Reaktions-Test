@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const userID = userCreds.uid;
   const userDisplay = document.querySelector(".username-display");
+  const ageDisplay = document.querySelector(".age-display");
   userDisplay.innerHTML = userObj.username;
+  ageDisplay.innerHTML = userObj.age ? userObj.age : "";
 
   const backToUser = document.querySelector(".back-to-user");
 
@@ -99,8 +101,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (userDisplay.innerHTML === userObj.username) {
       userDisplay.innerHTML += " (you)";
       backToUser.innerHTML = "";
+      ageDisplay.innerHTML = userObj.age ? userObj.age : "";
     } else {
       backToUser.innerHTML = "Back to You";
+      ageDisplay.innerHTML = "";
     }
 
     const today = new Date();
@@ -140,6 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let weekDates = [];
 
     const weekData = Object.entries(data);
+    console.log(weekData);
 
     createDayChart(weekData);
 
@@ -301,18 +306,34 @@ document.addEventListener("DOMContentLoaded", async () => {
       type: "line",
       data: {
         labels: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        datasets: weekData.map((day, i) => ({
-          label: day[0],
-          data: day[1],
-          borderWidth: 1,
-          borderJoinStyle: "round",
-          backgroundColor: darkColors[i] + "40",
-          borderColor: darkColors[i],
-          fill: true,
-          lineTension: 0.2,
-          spanGaps: true,
-          pointBackgroundColor: darkColors[i],
-        })),
+        datasets: weekData.map((day, i) => {
+          // * converts empty indexes to zeros (bug fix)
+
+          const noString = day[1].filter((num) => {
+            isNaN(num);
+            return num;
+          });
+
+          if (noString.length !== 9) {
+            while (noString.length < 9) {
+              noString.push(0);
+            }
+          }
+
+          return {
+            label: day[0],
+            data: noString,
+            borderWidth: 1,
+            borderJoinStyle: "round",
+            backgroundColor: darkColors[i] + "40",
+            borderColor: darkColors[i],
+            fill: true,
+            lineTension: 0.2,
+            spanGaps: true,
+            pointBackgroundColor: darkColors[i],
+            responsiv: true,
+          };
+        }),
       },
       options: {
         scales: {

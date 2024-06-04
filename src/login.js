@@ -54,6 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
                   JSONscore < Number(snapshot.val().highscore)
                     ? currDate
                     : snapshot.val().date,
+                age: snapshot.val().age,
+                projectIdentifier: snapshot.val().projectIdentifier,
               })
             );
 

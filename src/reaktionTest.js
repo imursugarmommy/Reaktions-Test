@@ -1,4 +1,7 @@
 const entryScreen = document.getElementById("entry-screen");
+const waitScreen = document.getElementById("wait-screen");
+const stopScreen = document.getElementById("stop-screen");
+
 const actionButtons = document.querySelectorAll(".actions button");
 const measurement = document.querySelector(".measurement");
 
@@ -6,17 +9,12 @@ var startTime, interval, elapsedTime;
 const timer = document.getElementById("timer");
 
 const formContainer = document.querySelector(".container");
-const skipBtn = document.querySelector(".skip");
 
 if (
   window.location.pathname === "/src/index.html" ||
   window.location.pathname === "/src/"
 ) {
   reset();
-
-  skipBtn.addEventListener("click", () => {
-    formContainer.style.zIndex = "-10";
-  });
 
   const loggedInInfo = document.querySelector(".logged-in-info");
   const username = document.querySelector(".username-display");
@@ -30,12 +28,13 @@ if (
   }
 }
 
-// ? punishment fuer zu frueh druecken
-// * um abuser zb rauszufiltern
+function earlyStop() {
+  window.location.reload();
+  reset();
+}
 
 function start() {
-  entryScreen.innerHTML = "<p>get ready . . .</p>";
-  entryScreen.style.background = "rgb(56, 173, 56)";
+  waitScreen.style.zIndex = "12";
 
   const randNum = Math.floor(Math.random() * 6) + 3;
   let count = 1;
@@ -43,7 +42,9 @@ function start() {
   var countdown = setInterval(() => {
     if (count === randNum) {
       clearInterval(countdown);
-      entryScreen.style.display = "none";
+      waitScreen.style.zIndex = "0";
+      stopScreen.style.zIndex = "12";
+
       startTimer();
     }
 
@@ -86,9 +87,9 @@ function reset() {
 
   timer.innerHTML = "0";
 
-  entryScreen.style.display = "block";
-  entryScreen.style.backgroundColor = "rgb(255, 139, 43)";
-  entryScreen.innerHTML = "Click when you're ready";
+  entryScreen.style.zIndex = "10";
+  waitScreen.style.zIndex = "0";
+  stopScreen.style.zIndex = "0";
 
   actionButtons.forEach((button) => {
     button.style.opacity = "0";

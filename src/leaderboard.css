@@ -81,6 +81,18 @@ button {
   }
 }
 
+:root {
+  --blue-primary: rgb(35, 123, 255);
+  --blue-hover: rgb(61, 138, 255);
+
+  --blue-dark: rgb(0, 92, 230);
+  --blue-dark-hover: rgb(0, 102, 255);
+
+  --blue-pitch: rgb(0, 50, 126);
+
+  --white: rgb(255, 255, 255);
+}
+
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -148,7 +160,7 @@ nav {
   }
 
   #play-again {
-    background-color: rgb(35, 123, 255);
+    background-color: var(--blue-primary);
     color: white;
     border: none;
     outline: none;
@@ -158,7 +170,178 @@ nav {
   }
 
   #play-again:hover {
-    background: rgb(61, 138, 255);
+    background: var(--blue-hover);
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  h1 {
+    width: 100%;
+  }
+
+  .input-wrapper {
+    justify-content: start;
+  }
+
+  .js-content {
+    width: 100%;
+
+    .col:last-child {
+      display: none;
+    }
+  }
+
+  .row.desc {
+    .col:last-child {
+      display: none;
+    }
+  }
+  .row.empty {
+    .col:nth-child(2) {
+      display: none;
+    }
+  }
+
+  .row {
+    width: 100%;
+    min-height: calc(2rem + 16px);
+    display: flex;
+
+    .col {
+      flex-basis: 33.3333%;
+    }
+  }
+
+  main {
+    padding: 2rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  h1 {
+    width: 60%;
+  }
+
+  .input-wrapper {
+    justify-content: center;
+  }
+
+  .js-content {
+    width: 60%;
+  }
+
+  .row {
+    width: 60%;
+
+    & > * {
+      flex-basis: 25%;
+    }
+  }
+}
+
+.close-popup {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.profile-popup {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: none;
+  justify-content: center;
+  padding: 5rem;
+
+  .profile-form {
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding: 0 6rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    position: relative;
+
+    #cancel-popup {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      width: fit-content;
+      margin: 0;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--blue-pitch);
+    }
+
+    & > * {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-block: 1.5rem;
+    }
+
+    & svg {
+      width: 125px;
+      height: 125px;
+      background-color: rgb(241, 241, 241);
+      border-radius: 50%;
+      transition: 200ms ease;
+    }
+
+    & svg:hover {
+      background-color: rgb(230, 230, 230);
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      .subtitle {
+        font-weight: 600;
+        font-size: 20px;
+        margin-block-end: 1rem;
+        color: var(--blue-pitch);
+      }
+
+      & input {
+        padding: 0.5rem 1rem;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid var(--blue-pitch);
+        background-color: transparent;
+        outline: none;
+        color: var(--blue-pitch);
+      }
+
+      .fa-solid.fa-xmark {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        cursor: pointer;
+        color: var(--blue-pitch);
+      }
+    }
+
+    #done {
+      background-color: var(--blue-pitch);
+      color: var(--white);
+      border: none;
+      outline: none;
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      transition: 200ms ease;
+    }
+
+    #done:hover {
+      background: var(--blue-dark-hover);
+    }
   }
 }
 
@@ -172,7 +355,6 @@ main {
   & h1 {
     margin-bottom: 4rem;
     font-size: 55px;
-    width: 60%;
   }
 
   .desc {
@@ -183,11 +365,11 @@ main {
     min-height: calc(2rem + 16px);
     display: flex;
     flex-direction: column;
-    width: 60%;
 
     .row {
       height: 100%;
       width: 100%;
+      text-overflow: ellipsis;
     }
   }
 
@@ -219,11 +401,6 @@ main {
 .row {
   min-height: calc(2rem + 16px);
   display: flex;
-  width: 60%;
-
-  & > * {
-    flex-basis: 25%;
-  }
 
   .middle,
   .right,
@@ -242,12 +419,19 @@ main {
     align-items: center;
     gap: 0.6rem;
   }
+
+  .col.middle {
+    text-overflow: ellipsis;
+    max-width: 100%;
+
+    white-space: nowrap;
+    overflow: hidden;
+  }
 }
 
 .input-wrapper {
   width: 100%;
   display: flex;
-  justify-content: center;
   margin-block-end: 4rem;
 
   .form-control {

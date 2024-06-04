@@ -81,6 +81,10 @@ button {
   }
 }
 
+.flex {
+  display: flex;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -111,7 +115,6 @@ main {
 }
 
 .nav {
-  width: 60%;
   margin-bottom: 4rem;
   display: flex;
   justify-content: space-between;
@@ -123,6 +126,11 @@ main {
   }
 
   .left {
+    .user-stats {
+      align-items: end;
+      gap: 1rem;
+    }
+
     .back-to-user {
       cursor: pointer;
 
@@ -196,9 +204,39 @@ main {
   }
 }
 
+@media only screen and (max-width: 1224px) {
+  main {
+    padding: 2rem;
+  }
+
+  .nav {
+    width: 100%;
+  }
+
+  .js-content {
+    width: 100%;
+  }
+
+  .empty-row {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 1224px) {
+  .nav {
+    width: 60%;
+  }
+
+  .js-content {
+    width: 60%;
+  }
+
+  .empty-row {
+    width: 60%;
+  }
+}
+
 .js-content,
 .mytable {
-  width: 60%;
   display: flex;
   flex-direction: row;
 }
@@ -221,6 +259,12 @@ main {
     align-items: center;
     padding: 0 1rem;
     border-bottom: 1px solid black;
+
+    text-overflow: ellipsis;
+    max-width: 100%;
+
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .average {
@@ -229,7 +273,6 @@ main {
 }
 
 .empty-row {
-  width: 60%;
   height: calc(2rem + 16px);
   display: flex;
 
@@ -262,9 +305,10 @@ main {
 }
 
 .graph-stats {
-  margin-block: 4rem;
+  margin-block: 2rem;
+  margin-block-end: 6rem;
   width: 60%;
-  height: 500px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   gap: 6rem;

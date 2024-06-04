@@ -98,6 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const passwordConfirm = document.querySelector(
       "#confirm-signup-password"
     ).value;
+    const age = document.querySelector("#age").value;
+    const projectIdentifier = document.querySelector(
+      "#project-identifier"
+    ).value;
 
     const date = new Date();
     const day = date.getDate();
@@ -113,22 +117,40 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password, username, score)
+    if (username === "") {
+      errorMsg.innerHTML = "username missing";
+      return;
+    }
+
+    createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+      username,
+      score,
+      age,
+      projectIdentifier
+    )
       .then((userCredential) => {
         const user = userCredential.user;
         const JSONscore = JSON.parse(localStorage.getItem("score"));
 
         sessionStorage.setItem("user-creds", JSON.stringify(user));
 
-        writeUserData(email, user.uid, username, JSONscore, currDate, user);
+        writeUserData(
+          email,
+          user.uid,
+          username,
+          JSONscore,
+          currDate,
+          user,
+          age,
+          projectIdentifier
+        );
       })
       .catch((error) => {
-        const errorMsg = document.querySelector(".error-message-signup");
-
         const errorCode = error.code;
         const errorMessage = error.message;
-
-        console.log(error);
 
         if (errorCode === undefined) return;
 
@@ -145,7 +167,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  async function writeUserData(email, userID, username, score, currDate, user) {
+  async function writeUserData(
+    email,
+    userID,
+    username,
+    score,
+    currDate,
+    user,
+    age,
+    projectIdentifier
+  ) {
     const reference = ref(db, "users/" + userID);
 
     await set(reference, {
@@ -154,6 +185,9 @@ document.addEventListener("DOMContentLoaded", () => {
       score: score || 0,
       highscore: score,
       date: currDate,
+      age: age !== "" ? age : "",
+      // ! projectIdentifier muss noch gesetzt werden
+      projectIdentifier: projectIdentifier === "13125" ? projectIdentifier : "",
     });
 
     new Promise((resolve) => {
@@ -165,6 +199,10 @@ document.addEventListener("DOMContentLoaded", () => {
           score: score,
           highscore: score,
           date: currDate,
+          age: age !== "" ? age : "",
+          // ! projectIdentifier muss noch gesetzt werden
+          projectIdentifier:
+            projectIdentifier === "13125" ? projectIdentifier : "",
         })
       );
       resolve();
