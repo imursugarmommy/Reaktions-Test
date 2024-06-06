@@ -156,7 +156,7 @@ async function writeUserData(
         highscore: score < highscore ? score : highscore,
         date: score < highscore ? currDate : date,
         age: age,
-        identifier: identifier,
+        projectIdentifier: identifier,
       })
     );
     resolve();
