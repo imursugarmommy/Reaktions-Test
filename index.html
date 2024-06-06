@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Reaktion Test</title>
+    <link
+      rel="stylesheet"
+      href="style.css" />
+  </head>
+  <body>
+    <main>
+      <div
+        id="entry-screen"
+        class="click-field"
+        onclick="start()">
+        <p>Click when you're ready</p>
+      </div>
+      <div
+        id="wait-screen"
+        class="click-field"
+        onclick="earlyStop()">
+        <p>get ready . . .</p>
+      </div>
+      <div class="top edge">
+        <div class="logged-in-info">
+          <i class="fa-solid fa-user"></i>
+          <div class="username-display">Username</div>
+        </div>
+        <a href="leaderboard.html">
+          <p>Leaderboard</p>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+      <div
+        id="stop-screen"
+        class="click-field"
+        onclick="checkTime()">
+        <div class="time">
+          <span id="timer">0 </span>
+          <span class="measurement">ms</span>
+        </div>
+        <div class="actions">
+          <button
+            class="save"
+            onclick="save()">
+            Save score
+          </button>
+          <button
+            id="reset"
+            onclick="reset()">
+            Play again
+          </button>
+        </div>
+      </div>
+      <div class="bottom edge"></div>
+    </main>
+    <div class="container">
+      <form
+        class="form"
+        id="login">
+        <div class="top-row">
+          <i
+            class="fa-solid fa-xmark close-btn"
+            onclick="closePopup()"></i>
+        </div>
+        <h1 class="form__title">Login</h1>
+        <div class="form__message form__message--error"></div>
+        <div class="form__input-group">
+          <input
+            type="text"
+            id="login-email"
+            class="form__input"
+            autofocus
+            placeholder="Email" />
+          <div class="form__input-error-message"></div>
+        </div>
+        <div class="form__input-group">
+          <input
+            type="password"
+            id="login-password"
+            class="form__input"
+            autofocus
+            placeholder="Password" />
+          <div class="form__input-error-message"></div>
+        </div>
+        <p class="error-message error-message-login"></p>
+        <button
+          class="form__button"
+          id="login-btn"
+          type="submit">
+          Continue
+        </button>
+        <p class="form__text">
+          <a
+            class="form__link"
+            href="./"
+            id="linkCreateAccount"
+            >Don't have an account? Create account</a
+          >
+        </p>
+      </form>
+      <form
+        class="form form--hidden"
+        id="createAccount">
+        <div class="top-row">
+          <i
+            class="fa-solid fa-xmark close-btn"
+            onclick="closePopup()"></i>
+        </div>
+        <h1 class="form__title">Create Account</h1>
+        <div class="form__message form__message--error"></div>
+        <div class="form__input-group">
+          <input
+            type="text"
+            id="signup-username"
+            class="form__input"
+            autofocus
+            placeholder="Username" />
+          <div class="form__input-error-message"></div>
+          <p class="neccessary">*</p>
+        </div>
+        <div class="form__input-group">
+          <input
+            type="text"
+            id="signup-email"
+            class="form__input"
+            autofocus
+            placeholder="Email Address" />
+          <div class="form__input-error-message"></div>
+          <p class="neccessary">*</p>
+        </div>
+        <div class="form__input-group">
+          <input
+            type="password"
+            id="signup-password"
+            class="form__input"
+            autofocus
+            placeholder="Password" />
+          <div class="form__input-error-message"></div>
+          <p class="neccessary">*</p>
+        </div>
+        <div class="form__input-group">
+          <input
+            type="password"
+            id="confirm-signup-password"
+            class="form__input"
+            autofocus
+            placeholder="Confirm password" />
+          <div class="form__input-error-message"></div>
+          <p class="neccessary">*</p>
+        </div>
+        <div class="form__input-group">
+          <input
+            type="text"
+            id="age"
+            class="form__input"
+            autofocus
+            placeholder="Age (optional)" />
+          <div class="form__input-error-message"></div>
+        </div>
+        <div class="form__input-group">
+          <input
+            type="text"
+            id="project-identifier"
+            class="form__input"
+            autofocus
+            placeholder="Project identifier (optional)" />
+          <div class="form__input-error-message"></div>
+        </div>
+        <p class="error-message error-message-signup"></p>
+        <button
+          class="form__button"
+          id="signup-btn"
+          type="submit">
+          Continue
+        </button>
+        <p class="form__text">
+          <a
+            class="form__link"
+            href="./"
+            id="linkLogin"
+            >Already have an account? Sign in</a
+          >
+        </p>
+      </form>
+    </div>
+    <script
+      src="https://kit.fontawesome.com/8a6963ffc1.js"
+      crossorigin="anonymous"></script>
+    <script src="reaktionTest.js"></script>
+    <script
+      type="module"
+      src="app.js"
+      defer></script>
+    <script
+      src="signup.js"
+      type="module"></script>
+    <script
+      type="module"
+      src="login.js"></script>
+  </body>
+</html>
