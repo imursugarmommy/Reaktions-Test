@@ -187,7 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
       date: currDate,
       age: age !== "" ? age : "",
       // ! projectIdentifier muss noch gesetzt werden
-      projectIdentifier: projectIdentifier === "13125" ? projectIdentifier : "",
+      projectIdentifier:
+        projectIdentifier === "juvoSK11" ? projectIdentifier : "",
     });
 
     new Promise((resolve) => {
@@ -202,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
           age: age !== "" ? age : "",
           // ! projectIdentifier muss noch gesetzt werden
           projectIdentifier:
-            projectIdentifier === "13125" ? projectIdentifier : "",
+            projectIdentifier === "juvoSK11" ? projectIdentifier : "",
         })
       );
       resolve();

@@ -148,7 +148,7 @@ saveChangesBtn.addEventListener("click", async () => {
   Object.assign(userObj, {
     age: changeAge.value,
     projectIdentifier:
-      changeIdentifier.value === "13125" ? changeIdentifier.value : "",
+      changeIdentifier.value === "juvoSK11" ? changeIdentifier.value : "",
   });
 
   sessionStorage.setItem("user-info", JSON.stringify(userObj));
@@ -157,10 +157,10 @@ saveChangesBtn.addEventListener("click", async () => {
     username: changeUsername.value,
     age: changeAge.value,
     projectIdentifier:
-      changeIdentifier.value === "13125" ? changeIdentifier.value : "",
+      changeIdentifier.value === "juvoSK11" ? changeIdentifier.value : "",
   });
 
-  if (changeIdentifier.value !== "13125") {
+  if (changeIdentifier.value !== "juvoSK11") {
     changeIdentifier.value = "";
   }
 
