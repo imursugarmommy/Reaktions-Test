@@ -114,7 +114,9 @@ function save() {
       userObj.username,
       userObj.highscore,
       elapsedTime,
-      userObj.date
+      userObj.date,
+      userObj.age,
+      userObj.projectIdentifier
     );
 
     return;
@@ -127,7 +129,16 @@ function closePopup() {
   formContainer.style.zIndex = "-10";
 }
 
-async function writeUserData(email, userID, username, highscore, score, date) {
+async function writeUserData(
+  email,
+  userID,
+  username,
+  highscore,
+  score,
+  date,
+  age,
+  identifier
+) {
   const dateFunc = new Date();
   const day = dateFunc.getDate();
   const month = dateFunc.getMonth() + 1;
@@ -135,7 +146,7 @@ async function writeUserData(email, userID, username, highscore, score, date) {
 
   const currDate = `${year}-${month}-${day}`;
 
-  new Promise((resolve) => {
+  await new Promise((resolve) => {
     sessionStorage.setItem(
       "user-info",
       JSON.stringify({
@@ -144,6 +155,8 @@ async function writeUserData(email, userID, username, highscore, score, date) {
         score: score,
         highscore: score < highscore ? score : highscore,
         date: score < highscore ? currDate : date,
+        age: age,
+        identifier: identifier,
       })
     );
     resolve();
