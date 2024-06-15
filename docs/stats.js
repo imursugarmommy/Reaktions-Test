@@ -9,7 +9,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 
-import { app } from "/app.js";
+import { app } from "./app.js";
 
 const auth = getAuth(app);
 const db = getDatabase();
@@ -144,7 +144,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     let weekDates = [];
 
     const weekData = Object.entries(data);
-    console.log(weekData);
 
     createDayChart(weekData);
 

@@ -26,6 +26,7 @@ function clearInputError(inputElement) {
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.querySelector("#login");
   const createAccountForm = document.querySelector("#createAccount");
+  const documentationForm = document.querySelector("#documentation");
 
   document
     .querySelector("#linkCreateAccount")
@@ -79,7 +80,7 @@ import {
   get,
   ref,
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
-import { app } from "/app.js";
+import { app } from "./app.js";
 
 const auth = getAuth(app);
 const db = getDatabase();
@@ -89,9 +90,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const signupBtn = document.querySelector("#signup-btn");
 
+  const signupForm = document.querySelector("#createAccount");
+
   signupBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
+    signupForm.classList.add("form--hidden");
+
+    signUpRequest();
+  });
+
+  function signUpRequest() {
     const username = document.querySelector("#signup-username").value;
     const email = document.querySelector("#signup-email").value;
     const password = document.querySelector("#signup-password").value;
@@ -121,6 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
       errorMsg.innerHTML = "username missing";
       return;
     }
+
+    errorMsg.style.display = "none";
 
     createUserWithEmailAndPassword(
       auth,
@@ -165,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         errorMsg.style.display = "block";
       });
-  });
+  }
 
   async function writeUserData(
     email,
@@ -188,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
       age: age !== "" ? age : "",
       // ! projectIdentifier muss noch gesetzt werden
       projectIdentifier:
-        projectIdentifier === "juvoSK11" ? projectIdentifier : "",
+        projectIdentifier === "jufoSK11" ? projectIdentifier : "",
     });
 
     new Promise((resolve) => {
@@ -203,12 +214,12 @@ document.addEventListener("DOMContentLoaded", () => {
           age: age !== "" ? age : "",
           // ! projectIdentifier muss noch gesetzt werden
           projectIdentifier:
-            projectIdentifier === "juvoSK11" ? projectIdentifier : "",
+            projectIdentifier === "jufoSK11" ? projectIdentifier : "",
         })
       );
       resolve();
     }).then(() => {
-      location.href = "leaderboard.html";
+      location.href = "./leaderboard.html";
     });
   }
 });

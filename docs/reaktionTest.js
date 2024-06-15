@@ -10,9 +10,9 @@ const timer = document.getElementById("timer");
 
 const formContainer = document.querySelector(".container");
 
-if (window.location.pathname === "index.html") {
-  reset();
+let gameEnd = false;
 
+if (window.location.pathname === "/docs/index.html") {
   const loggedInInfo = document.querySelector(".logged-in-info");
   const username = document.querySelector(".username-display");
   loggedInInfo.style.opacity = 0;
@@ -31,6 +31,9 @@ function earlyStop() {
 }
 
 function start() {
+  var audio = new Audio("/assets/wait-sound.wav");
+  audio.play();
+
   waitScreen.style.zIndex = "12";
 
   const randNum = Math.floor(Math.random() * 6) + 3;
@@ -43,6 +46,8 @@ function start() {
       stopScreen.style.zIndex = "12";
 
       startTimer();
+
+      audio.pause();
     }
 
     count++;
@@ -50,6 +55,9 @@ function start() {
 }
 
 function startTimer() {
+  var audio = new Audio("/assets/start-sound2.wav");
+  audio.play();
+
   startTime = Date.now();
 
   interval = setInterval(function () {
@@ -67,6 +75,11 @@ function checkTime() {
   if (elapsedTime > 0) {
     clearInterval(interval);
   }
+  var audio = new Audio("/assets/stop-sound.wav");
+
+  if (!gameEnd) audio.play();
+
+  gameEnd = true;
 
   actionButtons.forEach((button) => {
     button.style.opacity = "1";
@@ -81,6 +94,8 @@ function reset() {
   interval = undefined;
   startTime = 0;
   elapsedTime = 0;
+
+  gameEnd = false;
 
   timer.innerHTML = "0";
 
@@ -123,6 +138,15 @@ function save() {
 }
 
 function closePopup() {
+  const forms = document.querySelectorAll(".container form");
+  const login = document.querySelector("#login");
+
+  forms.forEach((form) => {
+    form.classList.add("form--hidden");
+  });
+
+  login.classList.remove("form--hidden");
+
   formContainer.style.zIndex = "-10";
 }
 
@@ -158,6 +182,6 @@ async function writeUserData(
     );
     resolve();
   }).then(() => {
-    location.href = "./leaderboard.html";
+    // location.href = "./leaderboard.html";
   });
 }

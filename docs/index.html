@@ -190,10 +190,121 @@
           >
         </p>
       </form>
+      <form
+        class="form form--hidden"
+        id="documentation">
+        <div class="top-row">
+          <i
+            class="fa-solid fa-xmark close-btn"
+            onclick="closePopup()"></i>
+        </div>
+        <h1 class="form__title">Documentation</h1>
+
+        <div
+          class="form__input-group"
+          id="documentation-time-group">
+          <div
+            class="form__input"
+            id="documentation-time">
+            Time
+          </div>
+          <i
+            class="fa-solid fa-arrows-rotate"
+            id="time-refresh"></i>
+        </div>
+        <div class="wellness">
+          <h2>Wie fühlen sie sich heute?</h2>
+          <div class="form__checkbox-group">
+            <input
+              type="radio"
+              class="form__input-checkbox"
+              name="well-being"
+              value="gut"
+              checked />
+            <label for="documentation-checkbox-gut">Gut</label>
+          </div>
+          <div class="form__checkbox-group">
+            <input
+              type="radio"
+              class="form__input-checkbox"
+              name="well-being"
+              value="ok" />
+            <label for="documentation-checkbox-ok">Ok</label>
+          </div>
+          <div class="form__checkbox-group">
+            <input
+              type="radio"
+              class="form__input-checkbox"
+              name="well-being"
+              value="neutral" />
+            <label for="documentation-checkbox-neutral">Neutral</label>
+          </div>
+          <div class="form__checkbox-group">
+            <input
+              type="radio"
+              class="form__input-checkbox"
+              name="well-being"
+              value="schlecht" />
+            <label for="documentation-checkbox-schlecht">Schlecht</label>
+          </div>
+          <div class="form__checkbox-group">
+            <input
+              type="radio"
+              class="form__input-checkbox"
+              name="well-being"
+              value="sehr schlecht" />
+            <label for="documentation-checkbox-sehr-schlecht"
+              >Sehr schlecht</label
+            >
+          </div>
+          <div class="form__textarea-group">
+            <textarea
+              name="comment"
+              id="documentation-wellness-comment"
+              placeholder="Others"></textarea>
+          </div>
+        </div>
+        <div class="complications">
+          <h2>Komplicationen bei dem Test</h2>
+          <div class="form__checkbox-group">
+            <input
+              type="radio"
+              name="complications"
+              value="no"
+              class="form__input-checkbox"
+              checked />
+            <label for="documentation-checkbox-no">Nein</label>
+          </div>
+          <div class="form__checkbox-group">
+            <input
+              type="radio"
+              name="complications"
+              value="yes"
+              class="form__input-checkbox" />
+            <label for="documentation-checkbox-yes">Ja</label>
+          </div>
+          <div class="form__textarea-group">
+            <textarea
+              name="comment"
+              id="documentation-complications-comment"
+              placeholder="Which"></textarea>
+          </div>
+        </div>
+        <p class="error-message error-message-documentation"></p>
+        <button
+          class="form__button"
+          id="login-continue-btn"
+          type="submit">
+          Continue
+        </button>
+      </form>
     </div>
     <script
       src="https://kit.fontawesome.com/8a6963ffc1.js"
       crossorigin="anonymous"></script>
+    <script
+      type="module"
+      src="checkScores.js"></script>
     <script src="reaktionTest.js"></script>
     <script
       type="module"

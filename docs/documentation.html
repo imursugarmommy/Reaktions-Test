@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="stats.css" />
+    <link
+      rel="stylesheet"
+      href="documentation.css" />
+    <link
+      rel="icon"
+      sizes="32x32"
+      href="/assets/biologie.png" />
+    <title>Documentation</title>
+  </head>
+
+  <body>
+    <main>
+      <div class="background"></div>
+      <div
+        class="back-to-leaderboard"
+        onclick="window.location.href = 'leaderboard.html';">
+        <i class="fa-solid fa-arrow-left"></i>
+        <p class="back-text">Back to Leaderboard</p>
+      </div>
+      <div class="nav">
+        <div class="left">
+          <div class="flex user-stats">
+            <h1 class="username-display">Username</h1>
+            <p class="age-display">54</p>
+          </div>
+          <p class="back-to-user"></p>
+        </div>
+        <div class="right admin-display">
+          <input
+            type="text"
+            id="search-user"
+            class="form-control"
+            placeholder="Search other user"
+            autocomplete="off" />
+          <button id="play-again">Play again</button>
+          <div class="search-output-table js-search-output"></div>
+        </div>
+      </div>
+
+      <div class="js-content documentation-display">
+        <div class="calendar">
+          <div class="month">
+            <a
+              href="#"
+              class="arrows arrow-left"
+              ><i class="fas fa-angle-left"></i
+            ></a>
+            <div class="flex date-display">
+              <span class="month-display">January</span>
+              <span class="year">2019</span>
+            </div>
+            <a
+              href="#"
+              class="arrows arrow-right"
+              ><i class="fas fa-angle-right"></i
+            ></a>
+          </div>
+          <div class="days">
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+            <span>Sun</span>
+          </div>
+          <div class="dates">
+            <div class="load-wrapper">
+              <svg
+                class="container"
+                viewBox="0 0 40 40"
+                height="40"
+                width="40">
+                <circle
+                  class="track"
+                  cx="20"
+                  cy="20"
+                  r="17.5"
+                  pathlength="100"
+                  stroke-width="5px"
+                  fill="none" />
+                <circle
+                  class="car"
+                  cx="20"
+                  cy="20"
+                  r="17.5"
+                  pathlength="100"
+                  stroke-width="5px"
+                  fill="none" />
+              </svg>
+              <p class="loading-text">Loading Stats . . .</p>
+            </div>
+            <button>
+              <time>1</time>
+            </button>
+            <button>
+              <time>2</time>
+            </button>
+            <button>
+              <time>3</time>
+            </button>
+            <button>
+              <time>4</time>
+            </button>
+            <button>
+              <time>5</time>
+            </button>
+            <button>
+              <time>6</time>
+            </button>
+            <button>
+              <time>7</time>
+            </button>
+            <button>
+              <time>8</time>
+            </button>
+            <button>
+              <time>9</time>
+            </button>
+            <button>
+              <time>10</time>
+            </button>
+            <button>
+              <time>11</time>
+            </button>
+            <button>
+              <time>12</time>
+            </button>
+            <button>
+              <time>13</time>
+            </button>
+            <button>
+              <time>14</time>
+            </button>
+            <button>
+              <time>15</time>
+            </button>
+            <button>
+              <time>16</time>
+            </button>
+            <button>
+              <time>17</time>
+            </button>
+            <button class="today">
+              <time>18</time>
+            </button>
+            <button>
+              <time>19</time>
+            </button>
+            <button>
+              <time>20</time>
+            </button>
+            <button>
+              <time>21</time>
+            </button>
+            <button>
+              <time>22</time>
+            </button>
+            <button>
+              <time>23</time>
+            </button>
+            <button>
+              <time>24</time>
+            </button>
+            <button>
+              <time>25</time>
+            </button>
+            <button>
+              <time>26</time>
+            </button>
+            <button>
+              <time>27</time>
+            </button>
+            <button>
+              <time>28</time>
+            </button>
+            <button>
+              <time>29</time>
+            </button>
+            <button>
+              <time>30</time>
+            </button>
+            <button>
+              <time>31</time>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script
+      src="https://kit.fontawesome.com/8a6963ffc1.js"
+      crossorigin="anonymous"></script>
+
+    <script
+      type="module"
+      src="documentation.js"></script>
+  </body>
+</html>

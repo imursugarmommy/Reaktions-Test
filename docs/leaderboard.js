@@ -1,6 +1,3 @@
-// * Realtime db to array
-// https://youtu.be/AjSFVeUE-zo?si=QkLm1zcIyecRA2QU
-
 import {
   getDatabase,
   get,
@@ -12,7 +9,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 
-import { app } from "/app.js";
+import { app } from "./app.js";
 
 const auth = getAuth(app);
 const db = getDatabase();
@@ -66,6 +63,11 @@ async function deleteAcc() {
   const snapshotScore = await get(reference);
 
   await remove(referenceScore);
+
+  const docRefrence = await child(ref(db), "documentation/" + userCreds.uid);
+  const docsSnapshot = await get(reference);
+
+  await remove(docRefrence);
 
   let user = auth.currentUser;
 
@@ -148,7 +150,7 @@ saveChangesBtn.addEventListener("click", async () => {
   Object.assign(userObj, {
     age: changeAge.value,
     projectIdentifier:
-      changeIdentifier.value === "juvoSK11" ? changeIdentifier.value : "",
+      changeIdentifier.value === "jufoSK11" ? changeIdentifier.value : "",
   });
 
   sessionStorage.setItem("user-info", JSON.stringify(userObj));
@@ -157,10 +159,10 @@ saveChangesBtn.addEventListener("click", async () => {
     username: changeUsername.value,
     age: changeAge.value,
     projectIdentifier:
-      changeIdentifier.value === "juvoSK11" ? changeIdentifier.value : "",
+      changeIdentifier.value === "jufoSK11" ? changeIdentifier.value : "",
   });
 
-  if (changeIdentifier.value !== "juvoSK11") {
+  if (changeIdentifier.value !== "jufoSK11") {
     changeIdentifier.value = "";
   }
 
@@ -282,8 +284,8 @@ async function updateAllUsers() {
   writeNewScore(userCreds.uid, userObj.score, userObj.username);
 }
 
-updateAllUsers().then(() => {
-  const allUserObj = JSON.parse(sessionStorage.getItem("all-users"));
+updateAllUsers().then(async () => {
+  const allUserObj = await JSON.parse(sessionStorage.getItem("all-users"));
   const allUserArray = Object.values(allUserObj);
 
   let pages = Math.floor(allUserArray.length / 5 + 1);
