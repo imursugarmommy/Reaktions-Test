@@ -408,7 +408,7 @@ body {
   place-content: center;
   gap: 2rem;
   font-size: 50px;
-  color: white;
+  color: var(--white);
   cursor: pointer;
 
   .time {
@@ -422,7 +422,7 @@ body {
 
 .edge {
   z-index: 40;
-  background-color: white;
+  background-color: var(--white);
 }
 
 .actions {
@@ -434,7 +434,7 @@ body {
   & button {
     opacity: 0;
     pointer-events: none;
-    background-color: white;
+    background-color: var(--white);
     border: none;
     outline: none;
     padding: 0.5rem 1rem;
@@ -509,7 +509,7 @@ body {
   justify-content: space-between;
   padding: 1rem 2rem;
   font-size: 20px;
-  background-color: white;
+  background-color: var(--white);
 }
 
 .top.edge {
@@ -521,7 +521,7 @@ body {
   justify-content: space-between;
   padding: 1rem 2rem;
   font-size: 20px;
-  background-color: white;
+  background-color: var(--white);
 
   & a {
     display: flex;

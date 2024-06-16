@@ -96,6 +96,7 @@ button {
   --blue-dark-hover: rgb(0, 102, 255);
 
   --blue-pitch: rgb(0, 50, 126);
+  --blue-pitch-transparent: rgba(0, 50, 126, 0.637);
 
   --white: rgb(255, 255, 255);
 
@@ -229,18 +230,36 @@ button {
 
     .load-wrapper {
       position: absolute;
-      background-color: white;
+      background-color: var(--white);
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: 100;
-      display: none;
+      display: grid;
       place-content: center;
 
       .loading-text {
         font-size: 25px;
         color: var(--blue-pitch);
+        display: flex;
+        justify-content: center;
+      }
+
+      .progress-bar {
+        width: 300px;
+        height: 10px;
+        margin-block-start: 1rem;
+        background-color: var(--blue-pitch-transparent);
+        border-radius: 15px;
+
+        .progress {
+          width: 0;
+          height: 100%;
+          background-color: var(--blue-pitch);
+          border-radius: 15px;
+          transition: width 100ms linear;
+        }
       }
     }
 
@@ -279,7 +298,7 @@ button {
         gap: 0.5rem;
         border-radius: 15px;
         background-color: rgba(0, 0, 0, 0.781);
-        color: white;
+        color: var(--white);
         pointer-events: none;
 
         text-align: left;

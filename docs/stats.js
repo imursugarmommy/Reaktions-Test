@@ -183,8 +183,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   readUserData();
 
-  function searchUser(username) {
-    const allUsers = JSON.parse(sessionStorage.getItem("all-users"));
+  async function searchUser(username) {
+    const snapshot = await get(child(ref(db), "users/"));
+    const allUsers = snapshot.val();
     const userID = Object.keys(allUsers).find(
       (key) => allUsers[key].username === username
     );
@@ -205,7 +206,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     var inputVal = searUserInp.value;
 
-    const allUsers = JSON.parse(sessionStorage.getItem("all-users"));
+    const snapshot = await get(child(ref(db), "users/"));
+    const allUsers = snapshot.val();
     const allUsersArray = Object.values(allUsers);
 
     var filteredUsers = [];

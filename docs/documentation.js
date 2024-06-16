@@ -32,7 +32,106 @@ document.addEventListener("DOMContentLoaded", () => {
   username.innerHTML = userObj.username;
   age.innerHTML = userObj.age ? userObj.age : "";
 
+  function adminCheck() {
+    const adminDisplay = document.querySelector(".admin-display");
+
+    if (userObj.admin) {
+      adminDisplay.style.display = "flex";
+    } else {
+      adminDisplay.style.display = "none";
+    }
+  }
+
+  adminCheck();
+
+  async function searchUser(newUsername) {
+    const snapshot = await get(child(ref(db), "users/"));
+    const allUsers = snapshot.val();
+    const userID = Object.keys(allUsers).find(
+      (key) => allUsers[key].username === newUsername
+    );
+
+    globalUserId = userID;
+    globalUsername = newUsername;
+
+    username.innerHTML = globalUsername;
+
+    updateCalendar();
+  }
+
+  const backToUser = document.querySelector(".back-to-user");
+
+  backToUser.addEventListener("click", () => {
+    globalUserId = userCreds.uid;
+    globalUsername = userObj.username;
+
+    username.innerHTML = userObj.username;
+
+    updateCalendar();
+  });
+
+  const searUserInp = document.querySelector("#search-user");
+  const searchUserOutput = document.querySelector(".search-output-table");
+
+  searUserInp.addEventListener("keyup", async () => {
+    searchUserOutput.innerHTML = "";
+
+    var inputVal = searUserInp.value;
+
+    const snapshot = await get(child(ref(db), "users/"));
+    const allUsers = snapshot.val();
+    const allUsersArray = Object.values(allUsers);
+
+    var filteredUsers = [];
+
+    for (let i = 0; i < allUsersArray.length; i++) {
+      inputVal = inputVal.toLowerCase();
+      var username = allUsersArray[i].username.toLowerCase();
+
+      if (username.includes(inputVal) && filteredUsers.length < 5) {
+        filteredUsers.push(allUsersArray[i].username);
+      }
+    }
+
+    for (let i = 0; i < filteredUsers.length; i++) {
+      searchUserOutput.style.display = "block";
+
+      var outputItems = document.createElement("div");
+      outputItems.className = "usernames";
+      outputItems.innerHTML = `
+        ${filteredUsers[i]}
+        <div class="line"></div>
+      `;
+
+      outputItems.addEventListener("click", () => {
+        searchUser(filteredUsers[i]);
+
+        searUserInp.value = "";
+        searchUserOutput.style.display = "none";
+      });
+
+      searchUserOutput.appendChild(outputItems);
+    }
+
+    if (inputVal === "" || filteredUsers.length < 1) {
+      searchUserOutput.innerHTML = "";
+      searchUserOutput.style.display = "none";
+    }
+  });
+
+  let globalUserId = userCreds.uid;
+  let globalUsername = userObj.username;
+
   async function updateCalendar() {
+    if (username.innerHTML === userObj.username) {
+      username.innerHTML += " (you)";
+      backToUser.innerHTML = "";
+      age.innerHTML = userObj.age ? userObj.age : "";
+    } else {
+      backToUser.innerHTML = "Back to You";
+      age.innerHTML = "";
+    }
+
     const loader = document.querySelector(".load-wrapper");
     const dateDisplay = document.querySelector(".date-display");
     dateDisplay.innerHTML = `
@@ -68,8 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const isCurrentMonth =
       new Date().getMonth() + 1 === month && new Date().getFullYear() === year;
 
-    const user = userCreds.uid;
-
     datesHTML.forEach((day, index) => {
       day.classList.remove("today", "within-four-weeks", "future");
 
@@ -86,7 +183,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    const progressBar = document.querySelector(".progress");
+
     for (let index = 0; index < lastDayOfMonth; index++) {
+      progressBar.style.width = (100 / lastDayOfMonth) * (index + 1) + "%";
+
       const newDate = new Date(year, month - 1, index + 1);
       const dayOfMonth = newDate.getDate();
       const monthOfYear = newDate.getMonth() + 1;
@@ -94,10 +195,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let currDate = `${yearOfYear}-${month}-${dayOfMonth}`;
 
-      const reference = ref(db, "scores/" + user + "/" + currDate);
+      const reference = ref(db, "scores/" + globalUserId + "/" + currDate);
       const snapshot = await get(reference);
 
-      const docReference = ref(db, "documentation/" + user + "/" + currDate);
+      const docReference = ref(
+        db,
+        "documentation/" + globalUserId + "/" + currDate
+      );
       const docSnapshot = await get(docReference);
 
       let average = null;
@@ -140,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const newDocReference = ref(
           db,
-          "documentation/" + user + "/" + currDate
+          "documentation/" + globalUserId + "/" + currDate
         );
         const newDocSnapshot = await get(newDocReference);
 
@@ -272,22 +376,27 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    loader.style.display = "none";
-    dateDisplay.innerHTML = `
-      <span class="month-display">${new Date(year, month - 1).toLocaleString(
+    setTimeout(() => {
+      loader.style.display = "none";
+      dateDisplay.innerHTML = `
+        <span class="month-display">${new Date(year, month - 1).toLocaleString(
+          "default",
+          {
+            month: "long",
+          }
+        )}</span>
+        <span class="year">${year}</span>
+      `;
+
+      datesHTML[0].style.gridColumn = firstOfMonthInt;
+      yearHTML.innerHTML = year;
+      monthHTML.innerHTML = new Date(year, month - 1).toLocaleString(
         "default",
         {
           month: "long",
         }
-      )}</span>
-      <span class="year">${year}</span>
-    `;
-
-    datesHTML[0].style.gridColumn = firstOfMonthInt;
-    yearHTML.innerHTML = year;
-    monthHTML.innerHTML = new Date(year, month - 1).toLocaleString("default", {
-      month: "long",
-    });
+      );
+    }, 100);
   }
 
   arrowLeft.addEventListener("click", () => {
@@ -319,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   async function removeOldDocs() {
-    const allDocsRef = ref(db, "documentation/" + userCreds.uid + "/");
+    const allDocsRef = ref(db, "documentation/" + globalUserId + "/");
     const allDocsSnapshot = await get(allDocsRef);
 
     if (!allDocsSnapshot.exists()) return;
@@ -338,7 +447,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (new Date(allDocs[i]) < priorDate) {
         const docRef = child(
           ref(db),
-          `documentation/${userCreds.uid}/${allDocs[i]}`
+          `documentation/${globalUserId}/${allDocs[i]}`
         );
         const docSnapshot = await get(docRef);
 

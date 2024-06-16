@@ -45,8 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // Perform your AJAX/Fetch login
-
     setFormMessage(loginForm, "error", "Invalid username/password combination");
   });
 
@@ -77,6 +75,7 @@ import {
 import {
   getDatabase,
   set,
+  child,
   get,
   ref,
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
@@ -95,12 +94,13 @@ document.addEventListener("DOMContentLoaded", () => {
   signupBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    signupForm.classList.add("form--hidden");
+    const errorMsg = document.querySelector(".error-message-signup");
+    errorMsg.style.display = "block";
 
     signUpRequest();
   });
 
-  function signUpRequest() {
+  async function signUpRequest() {
     const username = document.querySelector("#signup-username").value;
     const email = document.querySelector("#signup-email").value;
     const password = document.querySelector("#signup-password").value;
@@ -120,6 +120,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const currDate = `${year}-${month}-${day}`;
 
     const errorMsg = document.querySelector(".error-message-signup");
+
+    const snapshot = await get(child(ref(db), "users/"));
+    const allUsers = snapshot.val();
+    const userID = Object.keys(allUsers).find(
+      (key) => allUsers[key].username === username
+    );
+
+    if (userID) {
+      errorMsg.innerHTML = `Username already in use`;
+      return;
+    }
 
     if (password !== passwordConfirm) {
       errorMsg.innerHTML = `Passwords don't match`;
@@ -147,6 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const JSONscore = JSON.parse(localStorage.getItem("score"));
 
         sessionStorage.setItem("user-creds", JSON.stringify(user));
+
+        signupForm.classList.add("form--hidden");
 
         writeUserData(
           email,
@@ -188,6 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
     age,
     projectIdentifier
   ) {
+    const adminList = ["levi.besch@gmail.com", "etifri2007@web.de"];
+
     const reference = ref(db, "users/" + userID);
 
     await set(reference, {
@@ -197,9 +212,9 @@ document.addEventListener("DOMContentLoaded", () => {
       highscore: score,
       date: currDate,
       age: age !== "" ? age : "",
-      // ! projectIdentifier muss noch gesetzt werden
       projectIdentifier:
         projectIdentifier === "jufoSK11" ? projectIdentifier : "",
+      admin: adminList.includes(email) ? true : false,
     });
 
     new Promise((resolve) => {
@@ -212,9 +227,9 @@ document.addEventListener("DOMContentLoaded", () => {
           highscore: score,
           date: currDate,
           age: age !== "" ? age : "",
-          // ! projectIdentifier muss noch gesetzt werden
           projectIdentifier:
             projectIdentifier === "jufoSK11" ? projectIdentifier : "",
+          admin: adminList.includes(email) ? true : false,
         })
       );
       resolve();

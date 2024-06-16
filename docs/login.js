@@ -15,6 +15,8 @@ import { app } from "./app.js";
 const auth = getAuth(app);
 const db = getDatabase();
 
+const adminList = ["levi.besch@gmail.com", "etifri2007@web.de"];
+
 document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.querySelector("#login-btn");
   const documentationBtn = document.querySelector("#login-continue-btn");
@@ -162,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     : snapshot.val().date,
                 age: snapshot.val().age,
                 projectIdentifier: snapshot.val().projectIdentifier,
+                admin: adminList.includes(email) ? true : false,
               })
             );
 

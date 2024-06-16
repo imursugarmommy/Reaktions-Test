@@ -261,9 +261,6 @@ async function writeNewScore(userID, score, username) {
 }
 
 async function updateAllUsers() {
-  const snapshot = await get(child(ref(db), "users/"));
-  sessionStorage.setItem("all-users", JSON.stringify(snapshot.val()));
-
   if (!userObj) return;
 
   writeUserData(
@@ -285,7 +282,8 @@ async function updateAllUsers() {
 }
 
 updateAllUsers().then(async () => {
-  const allUserObj = await JSON.parse(sessionStorage.getItem("all-users"));
+  const snapshot = await get(child(ref(db), "users/"));
+  const allUserObj = snapshot.val();
   const allUserArray = Object.values(allUserObj);
 
   let pages = Math.floor(allUserArray.length / 5 + 1);
