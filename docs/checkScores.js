@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
             documentationBtn.style.display = "block";
             documentation.classList.remove("form--hidden");
 
+            container.style.width = "600px";
             container.style.zIndex = 200;
 
             return;

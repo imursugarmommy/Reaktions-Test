@@ -112,6 +112,8 @@ function reset() {
 }
 
 function save() {
+  const adminList = ["levi.besch@gmail.com", "etifri2007@web.de"];
+
   localStorage.setItem("score", elapsedTime);
   const stringifiedUserObj = sessionStorage.getItem("user-info");
   const stringifieduserCreds = sessionStorage.getItem("user-creds");
@@ -147,6 +149,7 @@ function closePopup() {
 
   login.classList.remove("form--hidden");
 
+  container.style.width = "400px";
   formContainer.style.zIndex = "-10";
 }
 
@@ -178,6 +181,7 @@ async function writeUserData(
         date: score < highscore ? currDate : date,
         age: age,
         projectIdentifier: identifier,
+        admin: adminList.includes(email) ? true : false,
       })
     );
     resolve();

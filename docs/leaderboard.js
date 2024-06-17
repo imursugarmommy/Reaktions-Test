@@ -17,8 +17,21 @@ const db = getDatabase();
 const userObj = JSON.parse(sessionStorage.getItem("user-info"));
 const userCreds = JSON.parse(sessionStorage.getItem("user-creds"));
 
+const adminList = ["levi.besch@gmail.com", "etifri2007@web.de"];
+
 const popup = document.querySelector(".popup");
 const popupOpener = document.querySelector("#popup-opener");
+
+function adminCheck() {
+  console.log(userObj);
+  const adminTaps = document.querySelector(".admin-taps");
+
+  if (userObj.admin) {
+    adminTaps.style.display = "block";
+  } else {
+    adminTaps.style.display = "none";
+  }
+}
 
 popupOpener.addEventListener("click", managePopup);
 
@@ -226,6 +239,7 @@ async function writeUserData(
     date,
     age: confirmedAge,
     projectIdentifier: confirmedIdentifier,
+    admin: adminList.includes(email) ? true : false,
   });
 }
 
@@ -262,6 +276,8 @@ async function writeNewScore(userID, score, username) {
 
 async function updateAllUsers() {
   if (!userObj) return;
+
+  adminCheck();
 
   writeUserData(
     userObj.username,

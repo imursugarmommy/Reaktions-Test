@@ -81,6 +81,25 @@ button {
   }
 }
 
+:root {
+  --color-primary: #009579;
+  --color-primary-dark: #007f67;
+  --color-secondary: #252c6a;
+  --color-error: #cc3333;
+  --color-success: #4bb544;
+  --border-radius: 4px;
+
+  --blue-primary: rgb(35, 123, 255);
+  --blue-hover: rgb(61, 138, 255);
+
+  --blue-dark: rgb(0, 92, 230);
+  --blue-dark-hover: rgb(0, 102, 255);
+
+  --blue-pitch: rgb(0, 50, 126);
+
+  --white: rgb(255, 255, 255);
+}
+
 .flex {
   display: flex;
 }

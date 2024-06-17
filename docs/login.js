@@ -188,6 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
               form.classList.add("form--hidden");
               documentation.classList.remove("form--hidden");
 
+              container.style.width = "600px";
               container.style.zIndex = 200;
             });
 

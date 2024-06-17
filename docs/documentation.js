@@ -127,6 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
       username.innerHTML += " (you)";
       backToUser.innerHTML = "";
       age.innerHTML = userObj.age ? userObj.age : "";
+    } else if (username.innerHTML === userObj.username + " (you)") {
+      backToUser.innerHTML = "";
+      age.innerHTML = userObj.age ? userObj.age : "";
     } else {
       backToUser.innerHTML = "Back to You";
       age.innerHTML = "";
