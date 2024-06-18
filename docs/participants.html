@@ -9,6 +9,9 @@
       rel="stylesheet"
       href="participants.css" />
     <link
+      rel="stylesheet"
+      href="style.css " />
+    <link
       rel="icon"
       sizes="32x32"
       href="/assets/biologie.png" />
@@ -19,9 +22,70 @@
     <title>Participants</title>
   </head>
   <body>
+    <div
+      class="back-to-leaderboard"
+      onclick="window.location.href = 'leaderboard.html';">
+      <i class="fa-solid fa-arrow-left"></i>
+      <p class="back-text">Back to Leaderboard</p>
+    </div>
+    <div class="no-admin"></div>
+    <main>
+      <div class="nav flex">
+        <h1>Participants - jufoSK11</h1>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="search-input"
+            class="form-control"
+            placeholder="Search Player"
+            value="" />
+          <svg
+            class="clear-input"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-circle"
+            viewBox="0 0 16 16">
+            <path
+              d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+            <path
+              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="js-content mytable"></div>
+
+      <div class="empty-row">
+        <div class="empty-column"></div>
+        <div class="empty-column"></div>
+        <div class="empty-column"></div>
+        <div class="empty-column"></div>
+        <div
+          class="empty-column"
+          id="button-container">
+          <div class="flex">
+            <i
+              class="fa-solid fa-caret-left"
+              id="prev-page"></i>
+            <i
+              class="fa-solid fa-caret-right"
+              id="next-page"></i>
+          </div>
+          <div class="offset-info">
+            <p class="pages-offset"></p>
+            <p>...</p>
+            <p class="max-user-pages"></p>
+          </div>
+        </div>
+      </div>
+    </main>
     <script
       src="https://kit.fontawesome.com/8a6963ffc1.js"
       crossorigin="anonymous"></script>
-    <script src="participants.js"></script>
+    <script
+      type="module"
+      src="participants.js"></script>
   </body>
 </html>

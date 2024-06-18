@@ -9,7 +9,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 
-import { app } from "./app.js";
+import { app, adminList } from "./app.js";
 
 const auth = getAuth(app);
 const db = getDatabase();
@@ -17,13 +17,10 @@ const db = getDatabase();
 const userObj = JSON.parse(sessionStorage.getItem("user-info"));
 const userCreds = JSON.parse(sessionStorage.getItem("user-creds"));
 
-const adminList = ["levi.besch@gmail.com", "etifri2007@web.de"];
-
 const popup = document.querySelector(".popup");
 const popupOpener = document.querySelector("#popup-opener");
 
 function adminCheck() {
-  console.log(userObj);
   const adminTaps = document.querySelector(".admin-taps");
 
   if (userObj.admin) {

@@ -10,12 +10,10 @@ import {
   child,
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 
-import { app } from "./app.js";
+import { app, adminList } from "./app.js";
 
 const auth = getAuth(app);
 const db = getDatabase();
-
-const adminList = ["levi.besch@gmail.com", "etifri2007@web.de"];
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.querySelector("#login-btn");

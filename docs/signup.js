@@ -84,7 +84,7 @@ import {
   get,
   ref,
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
-import { app } from "./app.js";
+import { app, adminList } from "./app.js";
 
 const auth = getAuth(app);
 const db = getDatabase();
@@ -447,8 +447,6 @@ document.addEventListener("DOMContentLoaded", () => {
     age,
     projectIdentifier
   ) {
-    const adminList = ["levi.besch@gmail.com", "etifri2007@web.de"];
-
     const reference = ref(db, "users/" + userID);
 
     await set(reference, {

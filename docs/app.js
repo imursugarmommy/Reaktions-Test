@@ -26,4 +26,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
 
-export { app };
+const adminList = ["levi.besch@gmail.com", "etifri2007@web.de"];
+
+export { app, adminList };
