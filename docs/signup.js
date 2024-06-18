@@ -458,7 +458,7 @@ document.addEventListener("DOMContentLoaded", () => {
       age: age !== "" ? age : "",
       projectIdentifier:
         projectIdentifier === "jufoSK11" ? projectIdentifier : "",
-      admin: adminList.includes(email) ? true : false,
+      admin: adminList.includes(email.toLowerCase()) ? true : false,
     });
 
     new Promise((resolve) => {
@@ -473,7 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
           age: age !== "" ? age : "",
           projectIdentifier:
             projectIdentifier === "jufoSK11" ? projectIdentifier : "",
-          admin: adminList.includes(email) ? true : false,
+          admin: adminList.includes(email.toLowerCase()) ? true : false,
         })
       );
       resolve();

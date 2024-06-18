@@ -236,7 +236,7 @@ async function writeUserData(
     date,
     age: confirmedAge,
     projectIdentifier: confirmedIdentifier,
-    admin: adminList.includes(email) ? true : false,
+    admin: adminList.includes(email.toLowerCase()) ? true : false,
   });
 }
 

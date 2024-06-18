@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     : snapshot.val().date,
                 age: snapshot.val().age,
                 projectIdentifier: snapshot.val().projectIdentifier,
-                admin: adminList.includes(email) ? true : false,
+                admin: adminList.includes(email.toLowerCase()) ? true : false,
               })
             );
 
