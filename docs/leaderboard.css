@@ -610,6 +610,23 @@ main {
       transform: translateY(-50%);
     }
   }
+
+  .service {
+    width: 10%;
+    align-self: start;
+    margin-inline: 10%;
+    position: relative;
+    margin-block: 0.8rem;
+
+    &::before {
+      content: "Service";
+      font-size: 14px;
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
 }
 
 .popup::after {

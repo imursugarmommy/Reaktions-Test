@@ -167,9 +167,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       weeklyAverageScores.push(average ? average : 0);
       weekDates.push(date);
 
+      const userDate = date;
+
+      const userDateArray = userDate.split("-");
+
+      const dateRearranged = `${
+        userDateArray[2] < 10 ? "0" + userDateArray[2] : userDateArray[2]
+      }.${userDateArray[1] < 10 ? "0" + userDateArray[1] : userDateArray[1]}.${
+        userDateArray[0]
+      }`;
+
       const tableHTML = `
         <div class="column">
-          <div class="row row-header" id="${date}">${date}</div>
+          <div class="row row-header" id="${date}">${dateRearranged}</div>
           ${values.map((v) => `<div class="row">${v}</div>`).join("")}
           <div class="row average">Ø ${average ? average : "keine Daten"}</div>
         </div>

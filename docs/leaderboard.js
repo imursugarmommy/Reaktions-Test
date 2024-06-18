@@ -437,12 +437,21 @@ updateAllUsers().then(async () => {
         rowClass = user.username === userObj.username ? "highlight-row" : "";
       }
 
+      const userDate = data[i].date;
+      const userDateArray = userDate.split("-");
+
+      const dateRearranged = `${
+        userDateArray[2] < 10 ? "0" + userDateArray[2] : userDateArray[2]
+      }.${userDateArray[1] < 10 ? "0" + userDateArray[1] : userDateArray[1]}.${
+        userDateArray[0]
+      }`;
+
       var row = `
         <div class="row ${rowClass}" id="${rowClass}">
           <div class="col left">${originalIndices[data[i].username]}</div>
           <div class="col middle">${data[i].username}</div>
           <div class="col right js-col-right">${data[i].highscore}</div>
-          <div class="col right-edge js-col-right-edge">${data[i].date}</div>
+          <div class="col right-edge js-col-right-edge">${dateRearranged}</div>
         </div>
         `;
       table.innerHTML += row;
