@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="service.css" />
+    <link
+      rel="icon"
+      sizes="32x32"
+      href="/assets/biologie.png" />
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init({
+          publicKey: "dkzEqY03OfqezFJfQ",
+        });
+      })();
+    </script>
+
+    <title>Contact</title>
+  </head>
+  <body>
+    <div
+      class="back-to-leaderboard"
+      onclick="window.location.href = '/docs/leaderboard.html';">
+      <i class="fa-solid fa-arrow-left"></i>
+      <p class="back-text">Back to Leaderboard</p>
+    </div>
+    <main>
+      <div class="status-popup hidden">
+        <i class="fa-solid fa-check"></i>
+        <p class="popup-text">Your message has been sent!</p>
+        <p class="popup-text">Thanks for your feedback</p>
+      </div>
+
+      <form class="feedback-wrapper">
+        <div
+          class="form-floating mb-3"
+          id="email-form">
+          <input
+            required
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            aria-static="true" />
+          <label for="floatingInput">Email address</label>
+          <p class="label">From:</p>
+        </div>
+        <div class="divide"></div>
+        <div
+          class="form-floating"
+          id="reciever-form">
+          <input
+            required
+            type="text"
+            class="form-control"
+            id="floatingReciever"
+            value="juforeaktionstest.service@gmail.com"
+            aria-static="true" />
+          <label for="floatingReciever">Reciever</label>
+          <p class="label">To:</p>
+        </div>
+        <div class="divide"></div>
+        <div
+          class="form-floating"
+          id="title-form">
+          <input
+            required
+            type="text"
+            class="form-control"
+            id="floatingTitle" />
+          <label
+            for="floatingTitle"
+            id="title-label"
+            >Title</label
+          >
+          <p
+            class="label"
+            id="title-label">
+            Subject:
+          </p>
+        </div>
+        <div class="divide"></div>
+        <div
+          class="form-floating"
+          id="description-form">
+          <textarea
+            class="form-control"
+            name="feedback"
+            id="description"
+            placeholder="Description"></textarea>
+          <p
+            class="label"
+            id="description-label">
+            Content:
+          </p>
+        </div>
+        <div class="divide"></div>
+        <button
+          type="submit"
+          id="send-mail">
+          Send <i class="fa-solid fa-arrow-up"></i>
+        </button>
+      </form>
+    </main>
+    <script
+      src="https://kit.fontawesome.com/8a6963ffc1.js"
+      crossorigin="anonymous"></script>
+    <script
+      type="module"
+      src="contact.js"></script>
+    <script
+      type="module"
+      src="service.js"></script>
+  </body>
+</html>

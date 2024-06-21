@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="leaderboard.css" />
+    <link
+      rel="icon"
+      sizes="32x32"
+      href="/assets/biologie.png" />
+
+    <title>Leaderboard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6908171002385651"
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="profile-popup">
+      <form class="profile-form">
+        <i
+          class="fa-solid fa-arrow-left"
+          id="cancel-popup"></i>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-person-fill"
+          viewBox="3 -2 10 16">
+          <path
+            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+        </svg>
+        <div class="input-group">
+          <label
+            for="username"
+            class="subtitle"
+            >Username</label
+          >
+
+          <input
+            type="text"
+            placeholder="e.g. 'lustigerUsername69'"
+            value="hs"
+            id="change-username"
+            autocomplete="off" />
+          <i
+            class="fa-solid fa-xmark remove-input"
+            id="remove-username"></i>
+        </div>
+        <div class="input-group">
+          <label
+            for="age"
+            class="subtitle"
+            >Age</label
+          >
+          <input
+            type="text"
+            placeholder="e.g. '16'"
+            value="hs"
+            id="change-age"
+            autocomplete="off" />
+          <i
+            class="fa-solid fa-xmark remove-input"
+            id="remove-age"></i>
+        </div>
+        <div class="input-group">
+          <label
+            for="identifier"
+            class="subtitle"
+            >Project Identifier</label
+          >
+          <input
+            type="text"
+            placeholder="e.g. '91784'"
+            value="hs"
+            id="change-identifier"
+            autocomplete="off" />
+          <i
+            class="fa-solid fa-xmark remove-input"
+            id="remove-identifier"></i>
+        </div>
+        <button
+          id="done"
+          type="submit">
+          Done
+        </button>
+      </form>
+    </div>
+    <nav>
+      <div class="left flex">
+        <i
+          class="fa-solid fa-user"
+          id="popup-opener"></i>
+        <p class="username-display">Username</p>
+        <ul
+          class="popup"
+          data-clicked="false">
+          <li id="profile-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-person-fill-gear"
+              viewBox="0 0 16 16">
+              <path
+                d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
+            </svg>
+            Profile
+          </li>
+          <li
+            id="stats-btn"
+            onclick="location.href = './Statistics/stats.html'">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-graph-up"
+              viewBox="0 0 16 16">
+              <path
+                fill-rule="evenodd"
+                d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07" />
+            </svg>
+            Stats
+          </li>
+          <li
+            id="documentation-btn"
+            onclick="location.href = './Statistics/documentation.html'">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-journal-text"
+              viewBox="0 0 16 16">
+              <path
+                d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+              <path
+                d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+              <path
+                d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+            </svg>
+            Documentation
+          </li>
+
+          <div class="admin-taps">
+            <div class="flex">
+              <div class="divide admin"></div>
+              <div class="divide-left"></div>
+            </div>
+            <li
+              id="notes-btn"
+              onclick="location.href = './Admin/notes.html'">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-pencil-square"
+                viewBox="0 0 16 16">
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path
+                  fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+              </svg>
+              Notes
+            </li>
+            <li
+              id="participants-btn"
+              onclick="location.href = './Admin/participants.html'">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-people-fill"
+                viewBox="0 0 16 16">
+                <path
+                  d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+              </svg>
+              Participants
+            </li>
+          </div>
+
+          <!-- coming soon -->
+          <div class="service-taps">
+            <div class="flex">
+              <div class="divide service"></div>
+              <div class="divide-left"></div>
+            </div>
+            <li
+              id="contact-btn"
+              onclick="location.href = './Contact/contact.html'">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-envelope"
+                viewBox="0 0 16 16">
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+              </svg>
+              Contact
+            </li>
+            <!-- <li
+              id="bug-report-btn"
+              onclick="location.href = './Contact/bugReport.html'">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-flag"
+                viewBox="0 0 16 16">
+                <path
+                  d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21 21 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21 21 0 0 0 14 7.655V1.222z" />
+              </svg>
+              Bug Report
+            </li>
+            <li
+              id="review-btn"
+              onclick="location.href = './Contact/review.html'">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-star"
+                viewBox="0 0 16 16">
+                <path
+                  d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z" />
+              </svg>
+              Review Site
+            </li> -->
+          </div>
+
+          <div class="divide"></div>
+
+          <li id="logout-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-box-arrow-right"
+              viewBox="0 0 16 16">
+              <path
+                fill-rule="evenodd"
+                d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+              <path
+                fill-rule="evenodd"
+                d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+            </svg>
+            Log out
+          </li>
+          <li id="delete">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-trash3"
+              viewBox="0 0 16 16">
+              <path
+                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+            </svg>
+            Delete Account
+            <div class="confirm-popup">
+              <button
+                class="confirm"
+                id="no">
+                Cancel</button
+              ><button
+                class="confirm"
+                id="yes">
+                Delete
+              </button>
+            </div>
+          </li>
+          <li
+            id="socials"
+            class="flex">
+            <a href="https://www.instagram.com/lelv.yzfr/">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 800 800"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M400 600C510.457 600 600 510.457 600 400C600 289.543 510.457 200 400 200C289.543 200 200 289.543 200 400C200 510.457 289.543 600 400 600ZM400 533.333C473.637 533.333 533.333 473.637 533.333 400C533.333 326.362 473.637 266.667 400 266.667C326.362 266.667 266.667 326.362 266.667 400C266.667 473.637 326.362 533.333 400 533.333Z"
+                  fill="#838383" />
+                <path
+                  d="M600 166.667C581.59 166.667 566.667 181.591 566.667 200C566.667 218.409 581.59 233.333 600 233.333C618.41 233.333 633.333 218.409 633.333 200C633.333 181.591 618.41 166.667 600 166.667Z"
+                  fill="#838383" />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M55.1319 142.535C33.3333 185.318 33.3333 241.323 33.3333 353.333V446.667C33.3333 558.677 33.3333 614.683 55.1319 657.463C74.3066 695.097 104.903 725.693 142.535 744.867C185.318 766.667 241.323 766.667 353.333 766.667H446.667C558.677 766.667 614.683 766.667 657.463 744.867C695.097 725.693 725.693 695.097 744.867 657.463C766.667 614.683 766.667 558.677 766.667 446.667V353.333C766.667 241.323 766.667 185.318 744.867 142.535C725.693 104.903 695.097 74.3067 657.463 55.132C614.683 33.3333 558.677 33.3333 446.667 33.3333H353.333C241.323 33.3333 185.318 33.3333 142.535 55.132C104.903 74.3067 74.3066 104.903 55.1319 142.535ZM446.667 100H353.333C296.228 100 257.408 100.052 227.403 102.503C198.175 104.891 183.228 109.22 172.801 114.532C147.713 127.316 127.316 147.713 114.532 172.801C109.22 183.228 104.891 198.175 102.503 227.403C100.052 257.408 99.9999 296.228 99.9999 353.333V446.667C99.9999 503.773 100.052 542.59 102.503 572.597C104.891 601.827 109.22 616.773 114.532 627.2C127.316 652.287 147.713 672.683 172.801 685.467C183.228 690.78 198.175 695.11 227.403 697.497C257.408 699.947 296.228 700 353.333 700H446.667C503.773 700 542.59 699.947 572.597 697.497C601.827 695.11 616.773 690.78 627.2 685.467C652.287 672.683 672.683 652.287 685.467 627.2C690.78 616.773 695.11 601.827 697.497 572.597C699.947 542.59 700 503.773 700 446.667V353.333C700 296.228 699.947 257.408 697.497 227.403C695.11 198.175 690.78 183.228 685.467 172.801C672.683 147.713 652.287 127.316 627.2 114.532C616.773 109.22 601.827 104.891 572.597 102.503C542.59 100.052 503.773 100 446.667 100Z"
+                  fill="#838383" />
+              </svg>
+            </a>
+            <a href="https://www.fiverr.com/webdevlelv">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 800 800"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M625 608.333V275H291.667V254.167C291.667 219.7 319.7 191.667 354.167 191.667H416.667V66.6667H354.167C304.458 66.7284 256.802 86.5026 221.652 121.652C186.503 156.802 166.728 204.458 166.667 254.167V275H83.3333V400H166.667V608.333H83.3333V733.333H375V608.333H291.667V400H501.167V608.333H416.667V733.333H708.333V608.333H625Z"
+                  fill="#838383" />
+                <path
+                  d="M562.5 191.667C597.018 191.667 625 163.684 625 129.167C625 94.6489 597.018 66.6667 562.5 66.6667C527.982 66.6667 500 94.6489 500 129.167C500 163.684 527.982 191.667 562.5 191.667Z"
+                  fill="#838383" />
+              </svg>
+            </a>
+            <a href="https://github.com/imursugarmommy">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 800 800"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1_8)">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M400 0C620.92 0 800 183.597 800 410.117C800 591.277 685.52 744.958 526.68 799.238C506.4 803.278 499.2 790.471 499.2 779.551C499.2 766.031 499.68 721.872 499.68 666.992C499.68 628.752 486.88 603.794 472.52 591.074C561.6 580.914 655.2 546.231 655.2 388.711C655.2 343.911 639.68 307.353 614 278.633C618.16 268.273 631.88 226.558 610.08 170.078C610.08 170.078 576.56 159.089 500.2 212.129C468.24 203.049 434 198.48 400 198.32C366 198.48 331.8 203.049 299.88 212.129C223.44 159.089 189.84 170.078 189.84 170.078C168.12 226.558 181.84 268.273 185.96 278.633C160.4 307.353 144.76 343.911 144.76 388.711C144.76 545.831 238.16 581.046 327 591.406C315.56 601.646 305.2 619.71 301.6 646.23C278.8 656.71 220.88 674.848 185.2 612.168C185.2 612.168 164.04 572.763 123.88 569.883C123.88 569.883 84.88 569.365 121.16 594.805C121.16 594.805 147.36 607.405 165.56 654.805C165.56 654.805 189.04 728.003 300.32 703.203C300.52 737.483 300.88 769.791 300.88 779.551C300.88 790.391 293.52 803.077 273.56 799.277C114.6 745.077 0 591.317 0 410.117C0 183.597 179.12 0 400 0Z"
+                    fill="#838383" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1_8">
+                    <rect
+                      width="800"
+                      height="800"
+                      fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </a>
+            <a href="https://tiktok.com/@lelv.yzfr">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 800 800"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M416.4 25.725C457.325 25.1 497.95 25.425 538.55 25.1C539.9 75.875 560.5 121.575 593.275 155.425L593.225 155.375C628.5 187.15 674.4 207.75 725 211.25L725.7 211.3V337.2C677.9 336 632.95 324.975 592.425 306.025L594.475 306.875C574.875 297.45 558.3 287.775 542.55 276.975L543.85 277.825C543.55 369.05 544.15 460.275 543.225 551.175C540.65 597.5 525.25 639.75 500.55 675.025L501.05 674.25C459.75 733.4 392.85 772.225 316.775 774.525H316.425C313.35 774.675 309.725 774.75 306.075 774.75C262.825 774.75 222.4 762.7 187.95 741.775L188.95 742.35C126.25 704.625 83 640.075 75 565L74.9 563.975C74.275 548.35 73.975 532.725 74.6 517.425C86.85 397.95 186.95 305.525 308.625 305.525C322.3 305.525 335.7 306.7 348.725 308.925L347.325 308.725C347.95 354.95 346.075 401.2 346.075 447.425C335.5 443.6 323.3 441.375 310.575 441.375C263.875 441.375 224.15 471.225 209.45 512.9L209.225 513.65C205.9 524.325 203.975 536.6 203.975 549.3C203.975 554.45 204.3 559.55 204.9 564.55L204.85 563.95C213.15 615.1 257 653.7 309.875 653.7C311.4 653.7 312.9 653.675 314.4 653.6H314.175C350.75 652.5 382.5 632.825 400.45 603.75L400.7 603.3C407.375 594 411.95 582.75 413.475 570.525L413.5 570.175C416.625 514.25 415.375 458.65 415.675 402.725C415.975 276.825 415.375 151.225 416.3 25.65L416.4 25.725Z"
+                  fill="#838383" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="right flex">
+        <div class="scores">
+          <div class="highscore score-wrap">
+            <p>Highscore</p>
+            <p class="highscore-display">ms</p>
+          </div>
+          <div class="score score-wrap">
+            <p>Score</p>
+            <p class="score-display">ms</p>
+          </div>
+        </div>
+        <button
+          id="play-again"
+          onclick="reset()">
+          Play again
+        </button>
+      </div>
+    </nav>
+    <main>
+      <h1>Leaderboard</h1>
+
+      <div class="input-wrapper">
+        <input
+          type="text"
+          id="search-input"
+          class="form-control"
+          placeholder="Search Player"
+          value="" />
+      </div>
+
+      <div class="row desc">
+        <div class="col left"></div>
+        <div class="col middle">Username</div>
+        <div class="col right">
+          <p>Highscore</p>
+        </div>
+        <div class="col right right-edge">
+          <p>Date</p>
+          <i
+            id="sortDate"
+            class="fa-solid fa-caret-up sort-table-btn"
+            data-clicked="false"></i>
+        </div>
+      </div>
+
+      <div class="js-content mytable"></div>
+      <div class="row empty">
+        <div class="col left"></div>
+        <div class="col middle"></div>
+        <div class="col right"></div>
+        <div class="col right right-edge">
+          <div class="flex">
+            <div class="flex">
+              <i
+                class="fa-solid fa-caret-left"
+                id="prev-page"></i>
+              <i
+                class="fa-solid fa-caret-right"
+                id="next-page"></i>
+            </div>
+            <div class="flex">
+              <p id="curr-page">0</p>
+              <p>...</p>
+              <p id="max-page">0</p>
+            </div>
+          </div>
+          <button id="to-user">To you</button>
+        </div>
+      </div>
+    </main>
+
+    <script
+      src="https://kit.fontawesome.com/8a6963ffc1.js"
+      crossorigin="anonymous"></script>
+    <script
+      src="leaderboard.js"
+      type="module"></script>
+    <script src="reaktionTest.js"></script>
+  </body>
+</html>
