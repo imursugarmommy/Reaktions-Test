@@ -23,7 +23,7 @@ const maxWeeks = 4;
 document.addEventListener("DOMContentLoaded", async () => {
   document
     .querySelector(".back-to-leaderboard")
-    .addEventListener("click", () => (location.href = "../leaderboard.html"));
+    .addEventListener("click", () => (location.href = "/leaderboard.html"));
 
   const userID = userCreds.uid;
   const userDisplay = document.querySelector(".username-display");
