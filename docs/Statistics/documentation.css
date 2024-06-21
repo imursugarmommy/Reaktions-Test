@@ -160,6 +160,10 @@ button {
   }
 }
 
+.documentation-display {
+  width: fit-content;
+}
+
 .calendar {
   display: inline-grid;
   justify-content: center;

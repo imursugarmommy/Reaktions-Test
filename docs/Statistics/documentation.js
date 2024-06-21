@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
         <div class="complications">
-          <h2>Komplicationen bei dem Test</h2>
+          <h2>Komplikationen bei dem Test</h2>
           <div class="form__checkbox-group">
             <input
               type="radio"

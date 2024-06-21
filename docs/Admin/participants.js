@@ -23,8 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function adminCheck() {
     const adminDisplay = document.querySelector(".no-admin");
 
+    const content = document.querySelector("main");
+
     if (!userObj) {
       adminDisplay.style.display = "block";
+      content.style.display = "none";
+
       return;
     }
 
