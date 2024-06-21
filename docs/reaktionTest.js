@@ -33,7 +33,7 @@ function earlyStop() {
 }
 
 function start() {
-  var audio = new Audio("Reaktions-Test/assets/wait-sound.wav");
+  var audio = new Audio("../assets/wait-sound.wav");
   audio.play();
 
   waitScreen.style.zIndex = "12";
@@ -57,7 +57,7 @@ function start() {
 }
 
 function startTimer() {
-  var audio = new Audio("Reaktions-Test/assets/start-sound2.wav");
+  var audio = new Audio("../assets/start-sound2.wav");
   audio.play();
 
   startTime = Date.now();
@@ -77,7 +77,7 @@ function checkTime() {
   if (elapsedTime > 0) {
     clearInterval(interval);
   }
-  var audio = new Audio("Reaktions-Test/assets/stop-sound.wav");
+  var audio = new Audio("../assets/stop-sound.wav");
 
   if (!gameEnd) audio.play();
 
