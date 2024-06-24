@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (userObj.admin) {
       adminDisplay.style.display = "none";
     } else {
+      window.location.href = "/leaderboard.html";
       adminDisplay.style.display = "block";
     }
   }
