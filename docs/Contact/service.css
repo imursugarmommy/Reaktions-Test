@@ -181,6 +181,7 @@ label[for="floatingReciever"] {
   cursor: text;
   color: grey;
   transition: 200ms ease;
+  pointer-events: none;
 }
 
 input[aria-static="true"] {
