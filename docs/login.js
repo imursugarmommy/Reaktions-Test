@@ -191,8 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             return;
-          } else location.href = "leaderboard.html";
+          }
         }
+        location.href = "leaderboard.html";
       })
       .catch((error) => {
         const errorCode = error.code;
