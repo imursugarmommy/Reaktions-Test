@@ -144,33 +144,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const reference = ref(db, "users/" + user.uid);
         const JSONscore = JSON.parse(localStorage.getItem("score"));
 
-        get(child(ref(db), "users/" + user.uid)).then((snapshot) => {
-          if (snapshot.exists) {
-            sessionStorage.setItem(
-              "user-info",
-              JSON.stringify({
-                username: snapshot.val().username,
-                email: snapshot.val().email,
-                score: JSONscore,
-                highscore: Math.min(
-                  JSONscore,
-                  Number(snapshot.val().highscore)
-                ),
-                date:
-                  JSONscore < Number(snapshot.val().highscore)
-                    ? currDate
-                    : snapshot.val().date,
-                age: snapshot.val().age,
-                projectIdentifier: snapshot.val().projectIdentifier,
-                admin: adminList.includes(email.toLowerCase()) ? true : false,
-              })
-            );
+        const snapshot = await get(child(ref(db), "users/" + user.uid));
 
-            sessionStorage.setItem("user-creds", JSON.stringify(user));
-
-            errorMsg.style.display = "none";
-          }
-        });
+        if (snapshot.exists) {
+          sessionStorage.setItem(
+            "user-info",
+            JSON.stringify({
+              username: snapshot.val().username,
+              email: snapshot.val().email,
+              score: JSONscore,
+              highscore: Math.min(JSONscore, Number(snapshot.val().highscore)),
+              date:
+                JSONscore < Number(snapshot.val().highscore)
+                  ? currDate
+                  : snapshot.val().date,
+              age: snapshot.val().age,
+              projectIdentifier: snapshot.val().projectIdentifier,
+              admin: adminList.includes(email.toLowerCase()) ? true : false,
+            })
+          );
+        }
 
         const docsReference = ref(db, "scores/" + user.uid + "/" + currDate);
         const docsSnapshot = await get(docsReference);
