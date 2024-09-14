@@ -87,7 +87,7 @@ async function deleteAcc() {
       console.log("user deleted");
     })
     .catch((error) => {
-      console.log("not working");
+      console.error("Something broke! Server responded with: ", error);
     });
 
   logout();

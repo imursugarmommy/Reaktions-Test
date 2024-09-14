@@ -116,6 +116,10 @@ document.addEventListener("DOMContentLoaded", () => {
       complicationsComment: complicationComment,
     });
 
+    sessionStorage.setItem("user-creds", JSON.stringify(user));
+
+    errorMsg.style.display = "none";
+
     location.href = "leaderboard.html";
   });
 
@@ -144,26 +148,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const reference = ref(db, "users/" + user.uid);
         const JSONscore = JSON.parse(localStorage.getItem("score"));
 
-        const snapshot = await get(child(ref(db), "users/" + user.uid));
+        get(child(ref(db), "users/" + user.uid)).then((snapshot) => {
+          if (snapshot.exists) {
+            sessionStorage.setItem(
+              "user-info",
+              JSON.stringify({
+                username: snapshot.val().username,
+                email: snapshot.val().email,
+                score: JSONscore,
+                highscore: Math.min(
+                  JSONscore,
+                  Number(snapshot.val().highscore)
+                ),
+                date:
+                  JSONscore < Number(snapshot.val().highscore)
+                    ? currDate
+                    : snapshot.val().date,
+                age: snapshot.val().age,
+                projectIdentifier: snapshot.val().projectIdentifier,
+                admin: adminList.includes(email.toLowerCase()) ? true : false,
+              })
+            );
 
-        if (snapshot.exists) {
-          sessionStorage.setItem(
-            "user-info",
-            JSON.stringify({
-              username: snapshot.val().username,
-              email: snapshot.val().email,
-              score: JSONscore,
-              highscore: Math.min(JSONscore, Number(snapshot.val().highscore)),
-              date:
-                JSONscore < Number(snapshot.val().highscore)
-                  ? currDate
-                  : snapshot.val().date,
-              age: snapshot.val().age,
-              projectIdentifier: snapshot.val().projectIdentifier,
-              admin: adminList.includes(email.toLowerCase()) ? true : false,
-            })
-          );
-        }
+            sessionStorage.setItem("user-creds", JSON.stringify(user));
+
+            errorMsg.style.display = "none";
+          }
+        });
 
         const docsReference = ref(db, "scores/" + user.uid + "/" + currDate);
         const docsSnapshot = await get(docsReference);
