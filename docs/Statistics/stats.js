@@ -23,7 +23,10 @@ const maxWeeks = 4;
 document.addEventListener("DOMContentLoaded", async () => {
   document
     .querySelector(".back-to-leaderboard")
-    .addEventListener("click", () => (location.href = "/leaderboard.html"));
+    .addEventListener(
+      "click",
+      () => (location.href = "/docs/leaderboard.html")
+    );
 
   const userID = userCreds.uid;
   const userDisplay = document.querySelector(".username-display");
@@ -42,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document
     .querySelector("#play-again")
-    .addEventListener("click", () => (location.href = "index.html"));
+    .addEventListener("click", () => (location.href = "../index.html"));
 
   const datesSnapshot = await get(child(ref(db), "scores/" + userID));
   const allDatesObj = datesSnapshot.val();
