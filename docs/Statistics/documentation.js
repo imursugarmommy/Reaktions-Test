@@ -228,11 +228,11 @@ document.addEventListener("DOMContentLoaded", () => {
             docSnapshot.exists()
               ? `<div class="popup">
             <div class="state">
-              <label for="state">Gefühlsgrad:</label>
+              <label for="state">Well Being:</label>
               <p>${docSnapshot.val().wellBeing}</p>
             </div>
             <div class="complications">
-              <label for="complications">Schwierigkeiten:</label>
+              <label for="complications">Complications:</label>
               <p>${docSnapshot.val().complications}</p>
             </div>
           </div>`
@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id="time-refresh"></i>
         </div>
         <div class="wellness">
-          <h2>Wie fühlen sie sich heute?</h2>
+          <h2>How are you feeling today?</h2>
           <div class="form__checkbox-group">
             <input
               type="radio"
@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
               name="well-being"
               value="gut"
               ${info.wellBeing === "gut" ? "checked" : ""} />
-            <label for="documentation-checkbox-gut">Gut</label>
+            <label for="documentation-checkbox-gut">Good</label>
           </div>
           <div class="form__checkbox-group">
             <input
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
               name="well-being"
               value="schlecht" 
               ${info.wellBeing === "schlecht" ? "checked" : ""}/>
-            <label for="documentation-checkbox-schlecht">Schlecht</label>
+            <label for="documentation-checkbox-schlecht">Bad</label>
           </div>
           <div class="form__checkbox-group">
             <input
@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
               name="well-being"
               value="sehr schlecht" 
               ${info.wellBeing === "sehr schlecht" ? "checked" : ""}/>
-            <label for="documentation-checkbox-sehr-schlecht">Sehr schlecht</label>
+            <label for="documentation-checkbox-sehr-schlecht">Very Bad</label>
           </div>
           <div class="form__textarea-group">
             <textarea
@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
         <div class="complications">
-          <h2>Komplikationen bei dem Test</h2>
+          <h2>Any Complications?</h2>
           <div class="form__checkbox-group">
             <input
               type="radio"
@@ -342,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
               value="no"
               class="form__input-checkbox"
               ${info.complications === "no" ? "checked" : ""} />
-            <label for="documentation-checkbox-no">Nein</label>
+            <label for="documentation-checkbox-no">No</label>
           </div>
           <div class="form__checkbox-group">
             <input
@@ -351,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
               value="yes"
               class="form__input-checkbox" 
               ${info.complications === "yes" ? "checked" : ""}/>
-            <label for="documentation-checkbox-yes">Ja</label>
+            <label for="documentation-checkbox-yes">Yes</label>
           </div>
           <div class="form__textarea-group">
             <textarea

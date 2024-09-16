@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="column">
           <div class="row row-header" id="${date}">${dateRearranged}</div>
           ${values.map((v) => `<div class="row">${v}</div>`).join("")}
-          <div class="row average">Ø ${average ? average : "keine Daten"}</div>
+          <div class="row average">Ø ${average ? average : "no data"}</div>
         </div>
       `;
 
