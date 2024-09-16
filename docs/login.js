@@ -116,8 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
       complicationsComment: complicationComment,
     });
 
-    sessionStorage.setItem("user-creds", JSON.stringify(user));
-
     errorMsg.style.display = "none";
 
     location.href = "leaderboard.html";
@@ -170,7 +168,10 @@ document.addEventListener("DOMContentLoaded", () => {
               })
             );
 
-            sessionStorage.setItem("user-creds", JSON.stringify(user));
+            sessionStorage.setItem(
+              "user-creds",
+              JSON.stringify(userCredential.user)
+            );
 
             errorMsg.style.display = "none";
           }
