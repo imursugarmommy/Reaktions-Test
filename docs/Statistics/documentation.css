@@ -470,3 +470,7 @@ button {
     margin-block: 1rem;
   }
 }
+
+.search-output-table {
+  z-index: 100;
+}
